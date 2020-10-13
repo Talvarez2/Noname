@@ -39,14 +39,17 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        if (playerNum == 1){
+        if (playerNum == 1)
+        {
             horizontalMove = Input.GetAxis("P1_Horizontal");
             verticalMove = Input.GetAxis("P1_Vertical");
-        } else {
+        }
+        else
+        {
             horizontalMove = Input.GetAxis("P2_Horizontal");
             verticalMove = Input.GetAxis("P2_Vertical");
         }
-        
+
 
         playerInput = new Vector3(horizontalMove, 0, 0);
         playerInput = Vector3.ClampMagnitude(playerInput, 1);  // moves at the same speed diagonally and straight
@@ -65,7 +68,7 @@ public class PlayerController : MonoBehaviour
         getDistance();
 
         player.Move(movePlayer * Time.deltaTime);  // player movement
-        
+
     }
 
     // gets the current camera direction
@@ -84,25 +87,36 @@ public class PlayerController : MonoBehaviour
     void getDistance()
     {
         distance = Vector3.Distance(player.transform.position, otherPlayer.transform.position);
-        Debug.Log(distance);
-        if (distance >= maxDistance){
+        // Debug.Log(distance);
+        if (distance >= maxDistance)
+        {
             // max distance to the horizontal
-            if (player.transform.position.x - otherPlayer.transform.position.x > 0){
-                if (movePlayer.x > 0){
+            if (player.transform.position.x - otherPlayer.transform.position.x > 0)
+            {
+                if (movePlayer.x > 0)
+                {
                     movePlayer.x = 0;
                 }
-            } else if (player.transform.position.x - otherPlayer.transform.position.x < 0){
-                if (movePlayer.x < 0){
+            }
+            else if (player.transform.position.x - otherPlayer.transform.position.x < 0)
+            {
+                if (movePlayer.x < 0)
+                {
                     movePlayer.x = 0;
                 }
             }
             // max distance to the vertical
-            if (player.transform.position.y - otherPlayer.transform.position.y > 0){
-                if (movePlayer.y > 0){
+            if (player.transform.position.y - otherPlayer.transform.position.y > 0)
+            {
+                if (movePlayer.y > 0)
+                {
                     movePlayer.y = 0;
                 }
-            } else if (player.transform.position.y - otherPlayer.transform.position.y < 0){
-                if (movePlayer.y < 0){
+            }
+            else if (player.transform.position.y - otherPlayer.transform.position.y < 0)
+            {
+                if (movePlayer.y < 0)
+                {
                     movePlayer.y = 0;
                 }
             }
@@ -116,7 +130,9 @@ public class PlayerController : MonoBehaviour
         {
             fallVelocity = -gravity * Time.deltaTime;
             movePlayer.y = fallVelocity;
-        } else {
+        }
+        else
+        {
             fallVelocity -= gravity * Time.deltaTime;
             movePlayer.y = fallVelocity;
         }
@@ -134,18 +150,19 @@ public class PlayerController : MonoBehaviour
         {
             fallVelocity = jumpForce;
             movePlayer.y = fallVelocity;
-        } else if (player.isGrounded && playerNum == 2 && Input.GetButtonDown("P2_Jump"))
+        }
+        else if (player.isGrounded && playerNum == 2 && Input.GetButtonDown("P2_Jump"))
         {
             fallVelocity = jumpForce;
             movePlayer.y = fallVelocity;
         }
-        
+
 
     }
 
     public void SlideDown()
     {
-        isOnSlope = Vector3.Angle(Vector3.up, hitNormal) >= player.slopeLimit 
+        isOnSlope = Vector3.Angle(Vector3.up, hitNormal) >= player.slopeLimit
                     && Vector3.Angle(Vector3.up, hitNormal) <= 89f;  // the plane angle is bigger than the player slope limit
 
         if (isOnSlope)
