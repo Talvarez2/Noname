@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
 
@@ -12,12 +12,20 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        float volume = PlayerPrefs.GetFloat("Music Volume", 1);
+
         audioSource = GetComponent<AudioSource>();
+        audioSource.volume = volume;
+
+        GameObject temp = this.transform.FindChild("OptionsMenu").gameObject;
+        temp = temp.transform.FindChild("MusicVolumeSlider").gameObject;
+        temp.GetComponent<Slider>().normalizedValue = volume;
     }
 
     public void changeAudioVolume(float volume)
     {
         audioSource.volume = volume;
+        PlayerPrefs.SetFloat("Music Volume", volume);
     }
 
     public void changeToFirstLevel()

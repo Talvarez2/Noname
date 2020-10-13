@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -8,7 +9,18 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     public GameObject pauseMenuCamera;
     public GameObject pauseMenuEventSystem;
+    private GameObject levelExtras;
 
+    void Start()
+    {
+        levelExtras = GameObject.FindWithTag("LevelExtras");
+
+        float volume = PlayerPrefs.GetFloat("Music Volume", 1);
+
+        GameObject temp = this.transform.FindChild("OptionsMenu").gameObject;
+        temp = temp.transform.FindChild("MusicVolumeSlider").gameObject;
+        temp.GetComponent<Slider>().normalizedValue = volume;
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
@@ -35,6 +47,13 @@ public class PauseMenu : MonoBehaviour
         pauseMenuEventSystem.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
+    }
+
+    public void changeAudioVolume(float volume)
+    {
+        AudioSource audioSource = levelExtras.GetComponent<AudioSource>();
+        audioSource.volume = volume;
+        PlayerPrefs.SetFloat("Music Volume", volume);
     }
 
 }
