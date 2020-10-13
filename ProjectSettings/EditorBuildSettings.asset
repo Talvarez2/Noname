@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/MirrorMenu.unity
+    guid: ff6248a8b09d37c63bdaf8c88c2aea24
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: eaed7d83ecd6ecfc8b975560c08873b7
+  - enabled: 1
+    path: Assets/Scenes/YouLost.unity
+    guid: 46901b222e256da49b91d18639c080ec
   m_configObjects: {}
