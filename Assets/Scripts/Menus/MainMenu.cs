@@ -17,8 +17,8 @@ public class MainMenu : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioSource.volume = volume;
 
-        GameObject temp = this.transform.FindChild("OptionsMenu").gameObject;
-        temp = temp.transform.FindChild("MusicVolumeSlider").gameObject;
+        GameObject temp = this.transform.Find("OptionsMenu").gameObject;
+        temp = temp.transform.Find("MusicVolumeSlider").gameObject;
         temp.GetComponent<Slider>().normalizedValue = volume;
     }
 
