@@ -17,8 +17,8 @@ public class PauseMenu : MonoBehaviour
 
         float volume = PlayerPrefs.GetFloat("Music Volume", 1);
 
-        GameObject temp = this.transform.FindChild("OptionsMenu").gameObject;
-        temp = temp.transform.FindChild("MusicVolumeSlider").gameObject;
+        GameObject temp = this.transform.Find("OptionsMenu").gameObject;
+        temp = temp.transform.Find("MusicVolumeSlider").gameObject;
         temp.GetComponent<Slider>().normalizedValue = volume;
     }
     void Update()
