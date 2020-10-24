@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
         if (playerNum == 1)
         {
-            horizontalMove = Input.GetAxis("P1_Horizontal");
+            horizontalMove = Input.GetAxis("P1_Horizontal");    
             verticalMove = Input.GetAxis("P1_Vertical");
         }
         else
@@ -52,20 +52,20 @@ public class PlayerController : MonoBehaviour
 
 
         playerInput = new Vector3(horizontalMove, 0, 0);
-        playerInput = Vector3.ClampMagnitude(playerInput, 1);  // moves at the same speed diagonally and straight
+        // playerInput = Vector3.ClampMagnitude(playerInput, 1);  // moves at the same speed diagonally and straight
 
         camDirection();
 
-        movePlayer = playerInput.x * camRight + playerInput.z * camForward;  // player moves respect to camera
+        movePlayer = playerInput.x * camRight; // + playerInput.z * camForward;  // player moves respect to camera
 
         movePlayer = movePlayer * playerSpeed;
 
         player.transform.LookAt(player.transform.position + movePlayer);  // the player looks where he is moving
 
         handleGravity();
-        SlideDown();
+        // SlideDown();
         playerSkills();
-        getDistance();
+        //getDistance();
 
         player.Move(movePlayer * Time.deltaTime);  // player movement
 
@@ -124,11 +124,13 @@ public class PlayerController : MonoBehaviour
     }
 
     // Handles gravity acceleration
+
+
     void handleGravity()
     {
         if (player.isGrounded)  // if player is touching not touching the flor it accelerates downwards
         {
-            fallVelocity = -gravity * Time.deltaTime;
+            fallVelocity = -1f;
             movePlayer.y = fallVelocity;
         }
         else
@@ -136,6 +138,8 @@ public class PlayerController : MonoBehaviour
             fallVelocity -= gravity * Time.deltaTime;
             movePlayer.y = fallVelocity;
         }
+        
+        
     }
 
     // handle diferent skills of our player
@@ -158,6 +162,13 @@ public class PlayerController : MonoBehaviour
         }
 
 
+    }
+    void OnGUI(){
+        if (playerNum==1){
+            GUI.Label(new Rect(50,20,200,100),"Y pos = " + player.transform.position.y.ToString("0.00"));
+            GUI.Label(new Rect(50,30,200,100),"Y vel = " + fallVelocity.ToString("0.00"));
+            GUI.Label(new Rect(50,40,200,100),"Grounded = " + player.isGrounded.ToString());
+        }
     }
 
     public void SlideDown()
