@@ -4,14 +4,26 @@ using UnityEngine;
 
 public class Spawn : MonoBehaviour
 {
-    private CharacterController player;
-
-    public void spawn(GameObject character)
+    private GameObject spawnPoint;
+    private void OnTriggerEnter(Collider other)
     {
-        player = character.GetComponent<CharacterController>();
-        Debug.Log("respawn");
+        if (other.tag == "SpawnPoint")
+        {
+            spawnPoint = other.gameObject;
+        }
+    }
+
+    public void respawn()
+    {
+        CharacterController player = GetComponent<CharacterController>();
         player.enabled = false;
-        player.transform.position = transform.position;
+        player.transform.position = spawnPoint.transform.position;
         player.enabled = true;
     }
+
+    public void handleReset()
+    {
+        GetComponent<HandleDeath>().die();
+    }
+
 }

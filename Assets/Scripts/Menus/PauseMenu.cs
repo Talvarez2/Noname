@@ -49,6 +49,17 @@ public class PauseMenu : MonoBehaviour
         gameIsPaused = false;
     }
 
+    public void Reset()
+    {
+        GameObject[] gameObjects;
+        gameObjects = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject go in gameObjects)
+        {
+            go.GetComponent<Spawn>().handleReset();
+        }
+        Resume();
+    }
+
     public void changeAudioVolume(float volume)
     {
         AudioSource audioSource = levelExtras.GetComponent<AudioSource>();
