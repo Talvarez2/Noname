@@ -23,7 +23,7 @@ public class Spawn : MonoBehaviour
 
     public void handleReset()
     {
-        GetComponent<HandleDeath>().die();
+        GetComponent<HandleDeath>().Reset();
     }
 
 }
