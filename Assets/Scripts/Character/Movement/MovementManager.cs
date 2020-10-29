@@ -9,10 +9,12 @@ public class MovementManager : MonoBehaviour
     public CharacterController player;
     private Vector3 movePlayer = new Vector3(0,0,0);
     private Vector3 spMovePlayer = new Vector3(0,0,0);
+    public Animator playerAnimatorController;
     
 
     void Start(){
         player = GetComponentInParent<CharacterController>();
+        playerAnimatorController = GetComponentInParent<Animator>();
     }
 
     void Update(){
@@ -36,7 +38,7 @@ public class MovementManager : MonoBehaviour
         }
         
         player.Move(movePlayer * Time.deltaTime + spMovePlayer);
-
+        playerAnimatorController.SetBool("IsGrounded", player.isGrounded);
     }
         
 }
