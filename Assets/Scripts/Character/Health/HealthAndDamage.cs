@@ -25,12 +25,12 @@ public class HealthAndDamage : MonoBehaviour
 
     public void InflictDamage(int damage)
     {
-        if (!invincible && life > 0)
+        if (!invincible && life > 0 && damage > 0)
         {
             life -= damage;
             healtBar.SetHealth(life);
             StartCoroutine(Invunerability());
-            StartCoroutine(DecreaseSpeed());
+            StartCoroutine(StopMovement());
             if (life <= 0)
             {
                 GetComponent<HandleDeath>().Die();
@@ -46,12 +46,12 @@ public class HealthAndDamage : MonoBehaviour
         invincible = false;
     }
 
-    IEnumerator DecreaseSpeed()
+    IEnumerator StopMovement()
     {
-        var currentSpeed = GetComponent<PlayerController>().playerSpeed;
-        Debug.Log(currentSpeed);
-        GetComponent<PlayerController>().playerSpeed = 0;
+        GameObject mover = transform.Find("Mover").gameObject;
+        var currentSpeed = mover.GetComponent<InputMover>().actualPlayerSpeed;
+        mover.GetComponent<InputMover>().actualPlayerSpeed = 0;
         yield return new WaitForSeconds(stopTime);
-        GetComponent<PlayerController>().playerSpeed = currentSpeed;
+        mover.GetComponent<InputMover>().actualPlayerSpeed = currentSpeed;
     }
 }
