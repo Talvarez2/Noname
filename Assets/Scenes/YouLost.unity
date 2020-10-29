@@ -937,7 +937,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1509578184}
-        m_MethodName: Reset
+        m_MethodName: Retry
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1200,7 +1200,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1791325493}
   - component: {fileID: 1791325492}
-  - component: {fileID: 1791325491}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1208,14 +1207,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!81 &1791325491
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1791325490}
-  m_Enabled: 1
 --- !u!20 &1791325492
 Camera:
   m_ObjectHideFlags: 0

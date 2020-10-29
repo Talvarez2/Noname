@@ -7,30 +7,29 @@ public class LostMenu : MonoBehaviour
     public GameObject lostMenuUI;
     public GameObject lostMenuCamera;
     public GameObject lostMenuEventSystem;
+    private GameObject levelExtras;
 
+    private void Start()
+    {
+        levelExtras = GameObject.FindWithTag("LevelExtras");
+    }
+
+    private void SetActiveMenuItems(bool value)
+    {
+        lostMenuUI.SetActive(value);
+        lostMenuCamera.SetActive(value);
+        lostMenuEventSystem.SetActive(value);
+    }
     public void Lost()
     {
-        lostMenuUI.SetActive(true);
-        lostMenuCamera.SetActive(true);
-        lostMenuEventSystem.SetActive(true);
-        Time.timeScale = 0f;
-    }
-    public void Reset()
-    {
-        GameObject[] gameObjects;
-        gameObjects = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject go in gameObjects)
-        {
-            go.GetComponent<Spawn>().handleReset();
-        }
-        Resume();
-    }
 
-    private void Resume()
+        SetActiveMenuItems(true);
+        levelExtras.GetComponent<LevelTimeScale>().StopLevel();
+    }
+    public void Retry()
     {
-        lostMenuUI.SetActive(false);
-        lostMenuCamera.SetActive(false);
-        lostMenuEventSystem.SetActive(false);
-        Time.timeScale = 1f;
+        levelExtras.GetComponent<SpawnSystem>().SendPlayersToSpawnsPositions();
+        levelExtras.GetComponent<LevelTimeScale>().StartLevel();
+        SetActiveMenuItems(false);
     }
 }

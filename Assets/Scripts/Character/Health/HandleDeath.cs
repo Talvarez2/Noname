@@ -29,11 +29,4 @@ public class HandleDeath : MonoBehaviour
     {
         lostMenu.GetComponent<LostMenu>().Lost();
     }
-
-    public void Reset()
-    {
-        GetComponent<HealthAndDamage>().RestartLife();
-        GetComponent<Spawn>().respawn();
-    }
-
 }

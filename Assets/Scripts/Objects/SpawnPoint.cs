@@ -7,7 +7,8 @@ public class SpawnPoint : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(transform.position, 1f);
-
+        float radius = GetComponent<SphereCollider>().radius;
+        Gizmos.DrawSphere(transform.position, radius);
     }
+
 }
