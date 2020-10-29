@@ -31,22 +31,31 @@ public class PauseMenu : MonoBehaviour
             }
         }
     }
+
+    private void SetActiveMenuItems(bool value)
+    {
+        pauseMenuUI.SetActive(value);
+        pauseMenuCamera.SetActive(value);
+        pauseMenuEventSystem.SetActive(value);
+    }
     public void Pause()
     {
-        pauseMenuUI.SetActive(true);
-        pauseMenuCamera.SetActive(true);
-        pauseMenuEventSystem.SetActive(true);
-        Time.timeScale = 0f;
+        SetActiveMenuItems(true);
+        levelExtras.GetComponent<LevelTimeScale>().StopLevel();
         gameIsPaused = true;
     }
 
     public void Resume()
     {
-        pauseMenuUI.SetActive(false);
-        pauseMenuCamera.SetActive(false);
-        pauseMenuEventSystem.SetActive(false);
-        Time.timeScale = 1f;
+        SetActiveMenuItems(false);
+        levelExtras.GetComponent<LevelTimeScale>().StartLevel();
         gameIsPaused = false;
+    }
+
+    public void Retry()
+    {
+        levelExtras.GetComponent<SpawnSystem>().SendPlayersToSpawnsPositions();
+        Resume();
     }
 
     public void changeAudioVolume(float volume)

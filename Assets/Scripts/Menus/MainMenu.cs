@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField] private string sceneName = "Level-1";
     private string pauseSceneName = "Pause";
+    private string lostSceneName = "YouLost";
 
     void Start()
     {
@@ -34,6 +35,7 @@ public class MainMenu : MonoBehaviour
         SceneManager.UnloadSceneAsync(currentScene);
         SceneManager.LoadScene(sceneName);
         SceneManager.LoadScene(pauseSceneName, LoadSceneMode.Additive);
+        SceneManager.LoadScene(lostSceneName, LoadSceneMode.Additive);
     }
     public void doExitGame()
     {
