@@ -9,7 +9,6 @@ public class JumpMover : MonoBehaviour
     private float fallVelocity;
     private MovementManager manager;
     private Vector3 movePlayer;
-
     CharacterController player;
     IDictionary<string, Vector3> movement;
 
@@ -27,13 +26,19 @@ public class JumpMover : MonoBehaviour
         int playerNum = GetComponentInParent<PlayerData>().playerNum;
         if (player.isGrounded && playerNum == 1)
         {
-            if (Input.GetButtonDown("P1_Jump")) fallVelocity = jumpForce;
+            if (Input.GetButtonDown("P1_Jump")) {
+                fallVelocity = jumpForce;
+                manager.playerAnimatorController.SetTrigger("Jump");
+            }    
             else fallVelocity = 0;
 
         }
         else if (player.isGrounded && playerNum == 2)
         {
-            if (Input.GetButtonDown("P2_Jump")) fallVelocity = jumpForce;
+            if (Input.GetButtonDown("P2_Jump")){
+                fallVelocity = jumpForce;
+                manager.playerAnimatorController.SetTrigger("Jump");
+            }
             else fallVelocity = 0;
         }
         movePlayer.y = fallVelocity;
