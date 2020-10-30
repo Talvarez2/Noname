@@ -10,11 +10,12 @@ public class MovementManager : MonoBehaviour
     private Vector3 movePlayer = new Vector3(0,0,0);
     private Vector3 spMovePlayer = new Vector3(0,0,0);
     public Animator playerAnimatorController;
+
+    private Renderer renderer;
     
 
     void Start(){
         player = GetComponentInParent<CharacterController>();
-        playerAnimatorController = GetComponentInParent<Animator>();
     }
 
     void Update(){
