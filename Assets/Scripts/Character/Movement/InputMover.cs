@@ -43,7 +43,8 @@ public class InputMover : MonoBehaviour
         }
         playerInput = new Vector3(horizontalMove, 0, 0);
         movePlayer = playerInput.x * camRight; // + playerInput.z * camForward;  // player moves respect to camera
-
+        manager.playerAnimatorController.SetFloat("WalkVelocity", playerInput.magnitude * playerSpeed);
+        manager.playerAnimatorController.SetBool("Left", (playerInput.x < 0));
         movePlayer = movePlayer * actualPlayerSpeed;
         movement["InputMover"] = movePlayer;
 
