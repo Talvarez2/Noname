@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private string sceneName = "Level-1";
     private string pauseSceneName = "Pause";
     private string lostSceneName = "YouLost";
+    private string winSceneName = "YouWin";
 
     void Start()
     {
@@ -36,6 +37,7 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(sceneName);
         SceneManager.LoadScene(pauseSceneName, LoadSceneMode.Additive);
         SceneManager.LoadScene(lostSceneName, LoadSceneMode.Additive);
+        SceneManager.LoadScene(winSceneName, LoadSceneMode.Additive);
     }
     public void doExitGame()
     {

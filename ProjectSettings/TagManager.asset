@@ -6,6 +6,7 @@ TagManager:
   tags:
   - LevelExtras
   - SpawnPoint
+  - ExitDoor
   layers:
   - Default
   - TransparentFX

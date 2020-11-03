@@ -12,11 +12,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: eaed7d83ecd6ecfc8b975560c08873b7
   - enabled: 1
-    path: Assets/Scenes/YouLost.unity
-    guid: 46901b222e256da49b91d18639c080ec
-  - enabled: 1
     path: Assets/Scenes/Level-1.unity
     guid: fea43a29b5badaa4eb41077ad4df3572
+  - enabled: 1
+    path: Assets/Scenes/YouLost.unity
+    guid: 46901b222e256da49b91d18639c080ec
   - enabled: 1
     path: Assets/Scenes/Pause.unity
     guid: c498e3be75454059d98411fc24edc8c4
