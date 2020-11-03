@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
 
     private AudioSource audioSource;
-    [SerializeField] private string sceneName = "Level-1";
+    private string standardLevelSceneName = "Level-";
     private string pauseSceneName = "Pause";
     private string lostSceneName = "YouLost";
     private string winSceneName = "YouWin";
@@ -30,15 +30,19 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetFloat("Music Volume", volume);
     }
 
-    public void changeToFirstLevel()
+    public void changeToLevel(int levelNumber)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.UnloadSceneAsync(currentScene);
-        SceneManager.LoadScene(sceneName);
+
+        string levelSceneName = standardLevelSceneName.Insert(standardLevelSceneName.Length, levelNumber.ToString());
+
+        SceneManager.LoadScene(levelSceneName);
         SceneManager.LoadScene(pauseSceneName, LoadSceneMode.Additive);
         SceneManager.LoadScene(lostSceneName, LoadSceneMode.Additive);
         SceneManager.LoadScene(winSceneName, LoadSceneMode.Additive);
     }
+
     public void doExitGame()
     {
         Application.Quit();
