@@ -73,6 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 8422778465664705185}
+  playerAnimatorController: {fileID: 0}
 --- !u!114 &2814733643874602399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,9 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57285157ea2826e48a762d21b4b21c68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNum: 1
   mainCamera: {fileID: 0}
   playerSpeed: 5
+  actualPlayerSpeed: 0
 --- !u!114 &7231051454952471472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,7 +115,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpForce: 10
-  playerNum: 1
 --- !u!1 &8422778465664705187
 GameObject:
   m_ObjectHideFlags: 0
@@ -186,6 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b5f6223b10dd9f068b3e8e04ecf5f23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNum: 0
 --- !u!114 &7077824090713476249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -433,6 +434,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8422778465664705184}
     m_Modifications:
+    - target: {fileID: 934961769722876529, guid: 079dc91da4b0027d586cec88a4ef87ef,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1100002155188419099, guid: 079dc91da4b0027d586cec88a4ef87ef,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -511,7 +517,7 @@ PrefabInstance:
     - target: {fileID: 2862509571076414760, guid: 079dc91da4b0027d586cec88a4ef87ef,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.26
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2862509571076414760, guid: 079dc91da4b0027d586cec88a4ef87ef,
         type: 3}
