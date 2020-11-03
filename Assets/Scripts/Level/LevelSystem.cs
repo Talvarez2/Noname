@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelSystem : MonoBehaviour
 {
-    private int implementedLevels = 2;
+    [SerializeField] private int implementedLevels = 1;
 
     private void Start()
     {

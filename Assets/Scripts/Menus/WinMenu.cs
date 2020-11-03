@@ -18,7 +18,6 @@ public class WinMenu : MonoBehaviour
         winMenuCamera.SetActive(value);
         winMenuEventSystem.SetActive(value);
 
-        levelExtras = GameObject.FindWithTag("LevelExtras");
         LevelSystem levelSystem = levelExtras.GetComponent<LevelSystem>();
         winMenuNextLevelButton.interactable = levelSystem.CheckNextLevel();
     }
