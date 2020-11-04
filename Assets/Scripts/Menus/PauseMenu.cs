@@ -13,10 +13,7 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
-        levelExtras = GameObject.FindWithTag("LevelExtras");
-
         float volume = PlayerPrefs.GetFloat("Music Volume", 1);
-
         GameObject temp = this.transform.Find("OptionsMenu").gameObject;
         temp = temp.transform.Find("MusicVolumeSlider").gameObject;
         temp.GetComponent<Slider>().normalizedValue = volume;
@@ -41,6 +38,7 @@ public class PauseMenu : MonoBehaviour
     public void Pause()
     {
         SetActiveMenuItems(true);
+        levelExtras = GameObject.FindWithTag("LevelExtras");
         levelExtras.GetComponent<LevelTimeScale>().StopLevel();
         gameIsPaused = true;
     }

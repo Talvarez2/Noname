@@ -9,11 +9,6 @@ public class LostMenu : MonoBehaviour
     public GameObject lostMenuEventSystem;
     private GameObject levelExtras;
 
-    private void Start()
-    {
-        levelExtras = GameObject.FindWithTag("LevelExtras");
-    }
-
     private void SetActiveMenuItems(bool value)
     {
         lostMenuUI.SetActive(value);
@@ -22,8 +17,8 @@ public class LostMenu : MonoBehaviour
     }
     public void Lost()
     {
-
         SetActiveMenuItems(true);
+        levelExtras = GameObject.FindWithTag("LevelExtras");
         levelExtras.GetComponent<LevelTimeScale>().StopLevel();
     }
     public void Retry()
