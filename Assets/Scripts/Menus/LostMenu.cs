@@ -23,7 +23,7 @@ public class LostMenu : MonoBehaviour
     }
     public void Retry()
     {
-        levelExtras.GetComponent<SpawnSystem>().SendPlayersToSpawnsPositions();
+        levelExtras.GetComponent<SpawnSystem>().SendPlayersToInitialSpawnsPositions();
         levelExtras.GetComponent<LevelTimeScale>().StartLevel();
         SetActiveMenuItems(false);
     }

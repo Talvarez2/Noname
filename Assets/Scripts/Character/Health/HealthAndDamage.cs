@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealthAndDamage : MonoBehaviour
 {
     public int initialLife = 100;
-    public int life;
+    private int life;
     public bool invincible;
     public float invincibleTime = 1f;
     public float stopTime = 0.2f;  // time the player stops after recieving damage
@@ -21,6 +21,15 @@ public class HealthAndDamage : MonoBehaviour
     {
         life = initialLife;
         healtBar.SetMaxHealth(initialLife);
+    }
+
+    public void SetLife(int playerLife) {
+        life = playerLife;
+        healtBar.SetHealth(playerLife);
+    }
+
+    public int GetActualLife() {
+        return life;
     }
 
     public void InflictDamage(int damage)
