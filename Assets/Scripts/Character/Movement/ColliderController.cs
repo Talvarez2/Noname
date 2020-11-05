@@ -11,7 +11,8 @@ public class ColliderController : MonoBehaviour
 
         if (other.tag == "SpawnPoint")
         {
-            levelExtras.GetComponent<SpawnSystem>().UpdateLastPlayerPoint(playerNum, other.gameObject);
+            int playerLife = GetComponent<HealthAndDamage>().GetActualLife();
+            levelExtras.GetComponent<SpawnSystem>().UpdateLastPlayerSpawnPoint(playerNum, other.gameObject, playerLife);
         }
 
         if (other.tag == "ExitDoor")

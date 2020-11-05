@@ -52,7 +52,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Retry()
     {
-        levelExtras.GetComponent<SpawnSystem>().SendPlayersToSpawnsPositions();
+        levelExtras.GetComponent<SpawnSystem>().SendPlayersToLastSpawnsPositions();
         Resume();
     }
 
