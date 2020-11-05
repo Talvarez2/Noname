@@ -11,7 +11,7 @@ public class SpikeDamage : MonoBehaviour
     {
         //Fetch the Collider from the GameObject
         m_Collider = GetComponent<BoxCollider>();
-        m_Collider.size = new Vector3(1, 5, 1);
+        m_Collider.size = new Vector3(1, 1, 1);
         m_Collider.isTrigger = true;
     }
 
