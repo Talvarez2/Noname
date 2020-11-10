@@ -58,9 +58,9 @@ public class HealthAndDamage : MonoBehaviour
     IEnumerator StopMovement()
     {
         GameObject mover = transform.Find("Mover").gameObject;
-        var currentSpeed = mover.GetComponent<InputMover>().actualPlayerSpeed;
-        mover.GetComponent<InputMover>().actualPlayerSpeed = 0;
+        var currentSpeed = mover.GetComponent<InputMover>().playerSpeed;
+        mover.GetComponent<InputMover>().playerSpeed = 0;
         yield return new WaitForSeconds(stopTime);
-        mover.GetComponent<InputMover>().actualPlayerSpeed = currentSpeed;
+        mover.GetComponent<InputMover>().playerSpeed = currentSpeed;
     }
 }

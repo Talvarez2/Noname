@@ -6,14 +6,15 @@ public class InputMover : MonoBehaviour
 {
     // Start is called before the first frame update
     public Camera mainCamera;
-    [SerializeField] private float playerSpeed = 5;
-    public float actualPlayerSpeed;
+    public float playerSpeed = 5;
 
 
     private MovementManager manager;
 
     CharacterController player;
-    IDictionary<string, Vector3> movement;
+    IDictionary<string, Vector3[]> movement;
+    private Vector3[] moveInfo = {new Vector3(), new Vector3(), new Vector3()};
+    private Vector3 staticMovement = new Vector3();
 
 
     private float horizontalMove;
@@ -21,11 +22,10 @@ public class InputMover : MonoBehaviour
 
     void Start()
     {
-        actualPlayerSpeed = playerSpeed;
         manager = GetComponent<MovementManager>();
         player = manager.player;
         movement = manager.Vector3Stack;
-        movement.Add("InputMover", movePlayer);
+        movement.Add("InputMover", moveInfo);
         camRight = mainCamera.transform.right;
     }
 
@@ -42,11 +42,15 @@ public class InputMover : MonoBehaviour
             horizontalMove = Input.GetAxis("P2_Horizontal");
         }
         playerInput = new Vector3(horizontalMove, 0, 0);
-        movePlayer = playerInput.x * camRight; // + playerInput.z * camForward;  // player moves respect to camera
+        staticMovement = playerInput.x * camRight * playerSpeed; 
+
+        moveInfo[0] = staticMovement;
+        movement["InputMover"] = moveInfo;
+
+        // Animator
         manager.playerAnimatorController.SetFloat("WalkVelocity", playerInput.magnitude * playerSpeed);
         manager.playerAnimatorController.SetBool("Left", (playerInput.x < 0));
-        movePlayer = movePlayer * actualPlayerSpeed;
-        movement["InputMover"] = movePlayer;
+
 
     }
 }
