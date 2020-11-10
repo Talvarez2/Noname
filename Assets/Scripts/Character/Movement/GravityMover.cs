@@ -9,10 +9,12 @@ public class GravityMover : MonoBehaviour
     public float gravity = 10;
 
     private MovementManager manager;
-    private Vector3 movePlayer;
+    private Vector3[] moveInfo = {new Vector3(), new Vector3(), new Vector3()};
+    private Vector3 staticMovement = new Vector3();
+    private Vector3 dynamicMovement = new Vector3();
     private float fallVelocity;
 
-    IDictionary<string, Vector3> movement;
+    IDictionary<string, Vector3[]> movement;
     CharacterController player;
 
     void Start()
@@ -20,20 +22,18 @@ public class GravityMover : MonoBehaviour
         manager = GetComponent<MovementManager>(); 
         player = manager.player;
         movement = manager.Vector3Stack;
-        movement.Add("GravityMover",movePlayer);
+        movement.Add("GravityMover",moveInfo);
     }
     void Update(){
-        if (player.isGrounded)  // if player is touching not touching the flor it accelerates downwards
-        {
-            fallVelocity = -2f;
-            movePlayer.y = fallVelocity;
-        }
-        else
-        {
-            fallVelocity -= gravity * Time.deltaTime;
-            movePlayer.y = fallVelocity;
-        }
-        movement["GravityMover"] = movePlayer;
+        staticMovement = new Vector3();
+        dynamicMovement = new Vector3();
+
+        if (player.isGrounded) staticMovement.y = -2f;
+        else  dynamicMovement.y =  -gravity;
+
+        moveInfo[0] = staticMovement;
+        moveInfo[1] = dynamicMovement;
+        movement["GravityMover"] = moveInfo;
     }
     // void OnGUI(){
  
