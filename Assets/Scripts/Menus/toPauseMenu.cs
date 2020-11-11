@@ -6,13 +6,15 @@ using UnityEngine.SceneManagement;
 public class toPauseMenu : MonoBehaviour
 {
     private GameObject pauseMenu;
+    
     void Start()
     {
         LookForPauseMenuGameObject();
     }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
         {
             if (pauseMenu.GetComponent<PauseMenu>().gameIsPaused == false)
             {

@@ -18,6 +18,7 @@ public class PauseMenu : MonoBehaviour
         temp = temp.transform.Find("MusicVolumeSlider").gameObject;
         temp.GetComponent<Slider>().normalizedValue = volume;
     }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
@@ -35,6 +36,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuCamera.SetActive(value);
         pauseMenuEventSystem.SetActive(value);
     }
+    
     public void Pause()
     {
         SetActiveMenuItems(true);
