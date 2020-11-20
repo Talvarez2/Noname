@@ -8,6 +8,7 @@ public class FallEffect : MonoBehaviour
     public int timeBeforeDestroy = 1;
     BoxCollider m_Collider;
     Rigidbody rigidBody;
+    private MeshRenderer meshRenderer;
 
     private void Start() 
     {
@@ -19,11 +20,13 @@ public class FallEffect : MonoBehaviour
         rigidBody.useGravity = false;
         boxCollider.size = new Vector3(1, 5, 1);
         boxCollider.isTrigger = true;
+        meshRenderer = GetComponent<MeshRenderer>();
     }
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Player")
         {
+            StartCoroutine(ToogleImageSize());
             StartCoroutine(Fall());
             StartCoroutine(Destroy());
         }
@@ -35,6 +38,18 @@ public class FallEffect : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeFall);
         rigidBody.useGravity = true;
         rigidBody.isKinematic = false;
+    }
+
+    IEnumerator ToogleImageSize()
+    {
+        // can't recieve damage more than once in 'invincibleTime' seconds
+        while (true)
+        {
+            meshRenderer.material.color = Color.red;
+            yield return new WaitForSeconds(0.2F);
+            meshRenderer.material.color = new Color(1, 1, 1, 0_01f);
+            yield return new WaitForSeconds(0.2F);
+        }
     }
 
     IEnumerator Destroy()

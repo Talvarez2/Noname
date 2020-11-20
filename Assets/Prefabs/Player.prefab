@@ -101,7 +101,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
   playerSpeed: 5
-  actualPlayerSpeed: 0
 --- !u!114 &7231051454952471472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,6 +288,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 0
+  spriteRenderer: {fileID: 4172203986842150462}
 --- !u!114 &7077824090713476249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,11 +328,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialLife: 100
-  life: 0
   invincible: 0
   invincibleTime: 1
+  damageColorTime: 5
   stopTime: 0.2
   healtBar: {fileID: 479484917655892802}
+  originalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &2537168743062523719
 MonoBehaviour:
   m_ObjectHideFlags: 0
