@@ -8,13 +8,20 @@ public class HealthAndDamage : MonoBehaviour
     private int life;
     public bool invincible;
     public float invincibleTime = 1f;
+    public float damageColorTime = 5;
     public float stopTime = 0.2f;  // time the player stops after recieving damage
     public HealtBar healtBar;
+
+    public Color originalColor = new Color(1, 1, 1, 0_01f);
+    private SpriteRenderer spriteRenderer;
+    private bool isRed = false;
 
 
     void Start()
     {
         RestartLife();
+        spriteRenderer = GetComponentInParent<PlayerData>().spriteRenderer;
+        spriteRenderer.material.color = originalColor;
     }
 
     public void RestartLife()
@@ -34,6 +41,7 @@ public class HealthAndDamage : MonoBehaviour
 
     public void InflictDamage(int damage)
     {
+        StartCoroutine(ColorRedDamage());
         if (!invincible && life > 0 && damage > 0)
         {
             life -= damage;
@@ -53,6 +61,19 @@ public class HealthAndDamage : MonoBehaviour
         invincible = true;
         yield return new WaitForSeconds(invincibleTime);
         invincible = false;
+    }
+
+    IEnumerator ColorRedDamage()
+    {
+        // can't recieve damage more than once in 'invincibleTime' seconds
+        if(!isRed){
+            isRed = true;
+            spriteRenderer.material.color = Color.red;
+            yield return new WaitForSeconds(0.2F);
+            spriteRenderer.material.color = originalColor;
+            yield return new WaitForSeconds(0.2F);
+            isRed = false;
+        }
     }
 
     IEnumerator StopMovement()

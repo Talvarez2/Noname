@@ -24,7 +24,6 @@ public class MovementManager : MonoBehaviour
     private int playerNum;
     private Vector3 projection, position_delta;
     public Animator playerAnimatorController;
-    
 
     void Start(){
         player = GetComponentInParent<CharacterController>();
@@ -37,6 +36,8 @@ public class MovementManager : MonoBehaviour
         if (player.isGrounded) dynamicMovement = new Vector3(0,0,0);
         forceMovement  = new Vector3(0,0,0);
         totalMovement  = new Vector3(0,0,0);
+
+        
 
         foreach (KeyValuePair<string,Vector3[]> kvp in Vector3Stack){
             staticMovement  += kvp.Value[0];
