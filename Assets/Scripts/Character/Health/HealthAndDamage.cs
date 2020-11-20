@@ -65,7 +65,7 @@ public class HealthAndDamage : MonoBehaviour
 
     IEnumerator ColorRedDamage()
     {
-        // can't recieve damage more than once in 'invincibleTime' seconds
+        // Flashes red once
         if(!isRed){
             isRed = true;
             spriteRenderer.material.color = Color.red;
