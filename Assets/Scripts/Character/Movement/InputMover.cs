@@ -7,6 +7,7 @@ public class InputMover : MonoBehaviour
     // Start is called before the first frame update
     public Camera mainCamera;
     public float playerSpeed = 5;
+    public float playerSpeedOnIce = 0.1f; 
 
 
     private MovementManager manager;
@@ -41,8 +42,16 @@ public class InputMover : MonoBehaviour
         {
             horizontalMove = Input.GetAxis("P2_Horizontal");
         }
+
         playerInput = new Vector3(horizontalMove, 0, 0);
-        staticMovement = playerInput.x * camRight * playerSpeed; 
+        bool playerIsOnIce = GetComponentInParent<PlayerData>().isOnIceFloor;
+        if (playerIsOnIce)
+        {
+            staticMovement = playerInput.x * camRight * playerSpeedOnIce; 
+        } else
+        {
+            staticMovement = playerInput.x * camRight * playerSpeed;    
+        }
 
         moveInfo[0] = staticMovement;
         movement["InputMover"] = moveInfo;

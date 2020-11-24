@@ -43,6 +43,7 @@ public class JumpMover : MonoBehaviour
                 manager.playerAnimatorController.SetTrigger("Jump");
             }
         }
+
         moveInfo[2] = forceMovement;
         movement["JumpMover"] = moveInfo;
     }
