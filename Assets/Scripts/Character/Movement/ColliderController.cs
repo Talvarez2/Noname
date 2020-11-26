@@ -19,6 +19,11 @@ public class ColliderController : MonoBehaviour
         {
             levelExtras.GetComponent<WinSystem>().UpdatePlayerOnExitDoor(playerNum);
         }
+
+        if (other.tag == "IceFloor") 
+        {
+            GetComponent<PlayerData>().isOnIceFloor = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -29,6 +34,11 @@ public class ColliderController : MonoBehaviour
             int playerNum = GetComponent<PlayerData>().playerNum;
             GameObject levelExtras = GameObject.FindWithTag("LevelExtras");
             levelExtras.GetComponent<WinSystem>().UpdatePlayerOnExitDoor(playerNum);
+        }
+
+        if (other.tag == "IceFloor") 
+        {
+            GetComponent<PlayerData>().isOnIceFloor = false;
         }
     }
 }

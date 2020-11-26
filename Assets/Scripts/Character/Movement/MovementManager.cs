@@ -24,7 +24,6 @@ public class MovementManager : MonoBehaviour
     private int playerNum;
     private Vector3 projection, position_delta;
     public Animator playerAnimatorController;
-    
 
     void Start(){
         player = GetComponentInParent<CharacterController>();
@@ -53,7 +52,7 @@ public class MovementManager : MonoBehaviour
             dynamicMovement -= projection*Time.deltaTime;
             staticMovement += position_delta;
             totalMovement = staticMovement + dynamicMovement;
-        }
+        }        
 
         player.Move(totalMovement * Time.deltaTime);
         playerAnimatorController.SetBool("IsGrounded", player.isGrounded);
