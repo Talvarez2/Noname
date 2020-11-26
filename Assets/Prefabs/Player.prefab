@@ -39,6 +39,9 @@ GameObject:
   - component: {fileID: 2814733643874602399}
   - component: {fileID: 1916161744636660398}
   - component: {fileID: 7231051454952471472}
+  - component: {fileID: 2565180486255974384}
+  - component: {fileID: 781610047436244881}
+  - component: {fileID: 1708265914012265101}
   m_Layer: 0
   m_Name: Mover
   m_TagString: Untagged
@@ -101,6 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
   playerSpeed: 5
+  playerSpeedOnIce: 0.1
 --- !u!114 &7231051454952471472
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +118,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpForce: 10
+--- !u!114 &2565180486255974384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281137171109263872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f92036a6b16b948c9293c851b118afd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &781610047436244881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281137171109263872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3335cb7f3bb9c024c953e5dfcf63223d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  show: 0
+  otherPlayer: {fileID: 0}
+  maxDist: 30
+--- !u!114 &1708265914012265101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281137171109263872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faaa192b47b48540ba2029a65a1fbd6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pullForce: 10
+  pullCooldown: 1
 --- !u!1 &4172203986842150459
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,6 +334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNum: 0
   spriteRenderer: {fileID: 4172203986842150462}
+  isOnIceFloor: 0
 --- !u!114 &7077824090713476249
 MonoBehaviour:
   m_ObjectHideFlags: 0

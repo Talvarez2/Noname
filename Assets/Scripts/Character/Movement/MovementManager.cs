@@ -37,8 +37,6 @@ public class MovementManager : MonoBehaviour
         forceMovement  = new Vector3(0,0,0);
         totalMovement  = new Vector3(0,0,0);
 
-        
-
         foreach (KeyValuePair<string,Vector3[]> kvp in Vector3Stack){
             staticMovement  += kvp.Value[0];
             dynamicMovement += kvp.Value[1] * Time.deltaTime;
@@ -54,7 +52,7 @@ public class MovementManager : MonoBehaviour
             dynamicMovement -= projection*Time.deltaTime;
             staticMovement += position_delta;
             totalMovement = staticMovement + dynamicMovement;
-        }
+        }        
 
         player.Move(totalMovement * Time.deltaTime);
         playerAnimatorController.SetBool("IsGrounded", player.isGrounded);
