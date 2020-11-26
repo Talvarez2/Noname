@@ -32,6 +32,8 @@ public class MovementManager : MonoBehaviour
     }
 
     void Update(){
+        playerAnimatorController.SetBool("IsGrounded", player.isGrounded);
+        Debug.Log(player.isGrounded);
         staticMovement = new Vector3(0,0,0);
         if (player.isGrounded) dynamicMovement = new Vector3(0,0,0);
         forceMovement  = new Vector3(0,0,0);
@@ -55,7 +57,6 @@ public class MovementManager : MonoBehaviour
         }        
 
         player.Move(totalMovement * Time.deltaTime);
-        playerAnimatorController.SetBool("IsGrounded", player.isGrounded);
     }
 
      void OnGUI(){
