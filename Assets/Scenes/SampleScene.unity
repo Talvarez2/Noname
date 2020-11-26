@@ -326,6 +326,16 @@ PrefabInstance:
       propertyPath: otherPlayer
       value: 
       objectReference: {fileID: 1843926241}
+    - target: {fileID: 1708265914012265101, guid: 192b2e474b95b2795b966d0f25df569f,
+        type: 3}
+      propertyPath: pullForce
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1708265914012265101, guid: 192b2e474b95b2795b966d0f25df569f,
+        type: 3}
+      propertyPath: pullCooldown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1916161744636660398, guid: 192b2e474b95b2795b966d0f25df569f,
         type: 3}
       propertyPath: mainCamera
@@ -1002,6 +1012,16 @@ PrefabInstance:
       propertyPath: otherPlayer
       value: 
       objectReference: {fileID: 1708008483}
+    - target: {fileID: 1708265914012265101, guid: 192b2e474b95b2795b966d0f25df569f,
+        type: 3}
+      propertyPath: pullForce
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1708265914012265101, guid: 192b2e474b95b2795b966d0f25df569f,
+        type: 3}
+      propertyPath: pullCooldown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1916161744636660398, guid: 192b2e474b95b2795b966d0f25df569f,
         type: 3}
       propertyPath: mainCamera

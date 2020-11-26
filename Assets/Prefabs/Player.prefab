@@ -144,7 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   show: 0
   otherPlayer: {fileID: 0}
-  maxDist: 22
+  maxDist: 30
 --- !u!114 &1708265914012265101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,6 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pullForce: 10
+  pullCooldown: 1
 --- !u!1 &4172203986842150459
 GameObject:
   m_ObjectHideFlags: 0

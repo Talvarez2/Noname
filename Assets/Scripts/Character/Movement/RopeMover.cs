@@ -6,7 +6,7 @@ public class RopeMover : MonoBehaviour
 {
     public bool show = false;
     public CharacterController otherPlayer;
-    public int maxDist = 22;
+    public int maxDist = 30;
 
     private MovementManager manager;
     private Vector3[] moveInfo = {new Vector3(), new Vector3(), new Vector3()};
