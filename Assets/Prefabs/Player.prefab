@@ -230,15 +230,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: e36b09ad15b7e479abdb26bf2a557243, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.8444445, y: 2.8444445}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &4172203986842150461
@@ -735,6 +735,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 079dc91da4b0027d586cec88a4ef87ef, type: 3}
+--- !u!224 &3313401983403453321 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2862509571076414760, guid: 079dc91da4b0027d586cec88a4ef87ef,
+    type: 3}
+  m_PrefabInstance: {fileID: 739220108282181281}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &484196952030647892 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 935071187252355317, guid: 079dc91da4b0027d586cec88a4ef87ef,
+    type: 3}
+  m_PrefabInstance: {fileID: 739220108282181281}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1594010509042810395 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2043839117812320442, guid: 079dc91da4b0027d586cec88a4ef87ef,
@@ -747,15 +759,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &484196952030647892 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 935071187252355317, guid: 079dc91da4b0027d586cec88a4ef87ef,
-    type: 3}
-  m_PrefabInstance: {fileID: 739220108282181281}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &3313401983403453321 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2862509571076414760, guid: 079dc91da4b0027d586cec88a4ef87ef,
-    type: 3}
-  m_PrefabInstance: {fileID: 739220108282181281}
-  m_PrefabAsset: {fileID: 0}
