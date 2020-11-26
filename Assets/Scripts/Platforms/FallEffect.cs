@@ -18,7 +18,7 @@ public class FallEffect : MonoBehaviour
         rigidBody = gameObject.AddComponent<Rigidbody>();
         rigidBody.isKinematic = true;
         rigidBody.useGravity = false;
-        boxCollider.size = new Vector3(1, 5, 1);
+        boxCollider.size = new Vector3(1, 2, 1);
         boxCollider.isTrigger = true;
         meshRenderer = GetComponent<MeshRenderer>();
     }
@@ -42,7 +42,6 @@ public class FallEffect : MonoBehaviour
 
     IEnumerator ToogleImageSize()
     {
-        // can't recieve damage more than once in 'invincibleTime' seconds
         while (true)
         {
             meshRenderer.material.color = Color.red;
