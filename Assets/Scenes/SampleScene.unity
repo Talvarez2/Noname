@@ -321,6 +321,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 781610047436244881, guid: 192b2e474b95b2795b966d0f25df569f,
+        type: 3}
+      propertyPath: otherPlayer
+      value: 
+      objectReference: {fileID: 1843926241}
     - target: {fileID: 1916161744636660398, guid: 192b2e474b95b2795b966d0f25df569f,
         type: 3}
       propertyPath: mainCamera
@@ -341,6 +346,11 @@ PrefabInstance:
       propertyPath: spriteRenderer
       value: 
       objectReference: {fileID: 697688270}
+    - target: {fileID: 3349683131887136160, guid: 192b2e474b95b2795b966d0f25df569f,
+        type: 3}
+      propertyPath: otherPlayer
+      value: 
+      objectReference: {fileID: 1843926241}
     - target: {fileID: 3484155428676450142, guid: 192b2e474b95b2795b966d0f25df569f,
         type: 3}
       propertyPath: playerNum
@@ -895,6 +905,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 781610047436244881, guid: 192b2e474b95b2795b966d0f25df569f,
+        type: 3}
+      propertyPath: otherPlayer
+      value: 
+      objectReference: {fileID: 1708008483}
     - target: {fileID: 1916161744636660398, guid: 192b2e474b95b2795b966d0f25df569f,
         type: 3}
       propertyPath: mainCamera
@@ -915,6 +930,11 @@ PrefabInstance:
       propertyPath: spriteRenderer
       value: 
       objectReference: {fileID: 1623558519}
+    - target: {fileID: 3349683131887136160, guid: 192b2e474b95b2795b966d0f25df569f,
+        type: 3}
+      propertyPath: otherPlayer
+      value: 
+      objectReference: {fileID: 1708008483}
     - target: {fileID: 3484155428676450142, guid: 192b2e474b95b2795b966d0f25df569f,
         type: 3}
       propertyPath: playerNum
@@ -1022,27 +1042,6 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: f7064df556685e245ac19fd768d3cae9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 192b2e474b95b2795b966d0f25df569f, type: 3}
---- !u!1 &1109266930 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1281137171109263872, guid: 192b2e474b95b2795b966d0f25df569f,
-    type: 3}
-  m_PrefabInstance: {fileID: 1002919850}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1109266932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1109266930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3335cb7f3bb9c024c953e5dfcf63223d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  show: 0
-  otherPlayer: {fileID: 1708008483}
-  maxDist: 10
 --- !u!95 &1143331425 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 4172203986842150461, guid: 192b2e474b95b2795b966d0f25df569f,
@@ -1064,7 +1063,7 @@ GameObject:
   - component: {fileID: 1292633365}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: IceFloor
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1265,24 +1264,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef6600b81881ff94990977313ab2c75e, type: 3}
---- !u!1 &2137308818 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1281137171109263872, guid: 192b2e474b95b2795b966d0f25df569f,
-    type: 3}
-  m_PrefabInstance: {fileID: 193926515}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2137308820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2137308818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3335cb7f3bb9c024c953e5dfcf63223d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  show: 0
-  otherPlayer: {fileID: 1843926241}
-  maxDist: 10

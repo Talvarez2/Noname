@@ -40,6 +40,8 @@ GameObject:
   - component: {fileID: 1916161744636660398}
   - component: {fileID: 7231051454952471472}
   - component: {fileID: 2565180486255974384}
+  - component: {fileID: 781610047436244881}
+  - component: {fileID: 1708265914012265101}
   m_Layer: 0
   m_Name: Mover
   m_TagString: Untagged
@@ -128,6 +130,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f92036a6b16b948c9293c851b118afd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &781610047436244881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281137171109263872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3335cb7f3bb9c024c953e5dfcf63223d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  show: 0
+  otherPlayer: {fileID: 0}
+  maxDist: 22
+--- !u!114 &1708265914012265101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1281137171109263872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faaa192b47b48540ba2029a65a1fbd6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pullForce: 10
 --- !u!1 &4172203986842150459
 GameObject:
   m_ObjectHideFlags: 0
