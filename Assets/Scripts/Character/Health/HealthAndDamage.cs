@@ -46,12 +46,21 @@ public class HealthAndDamage : MonoBehaviour
         {
             life -= damage;
             healtBar.SetHealth(life);
+            PlayDamageSound();
             StartCoroutine(Invunerability());
             StartCoroutine(StopMovement());
             if (life <= 0)
             {
                 GetComponent<HandleDeath>().Die();
             }
+        }
+    }
+
+    void PlayDamageSound()
+    {
+        if (!GetComponentInParent<PlayerData>().damageSound.isPlaying)
+        {
+            GetComponentInParent<PlayerData>().damageSound.Play();
         }
     }
 
