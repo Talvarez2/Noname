@@ -14,6 +14,9 @@ public class JumpMover : MonoBehaviour
     CharacterController player;
     IDictionary<string, Vector3[]> movement;
 
+    private bool playEnabled = false;
+    private int playerNum;
+
 
     void Start()
     {
@@ -21,18 +24,20 @@ public class JumpMover : MonoBehaviour
         player = manager.player;
         movement = manager.Vector3Stack;
         movement.Add("JumpMover", moveInfo);
+        playerNum = GetComponentInParent<PlayerData>().playerNum;
+
     }
 
     void Update()
     {
         forceMovement = new Vector3();
 
-        int playerNum = GetComponentInParent<PlayerData>().playerNum;
         if (player.isGrounded && playerNum == 1)
         {
             if (Input.GetButtonDown("P1_Jump")) {
                 forceMovement.y = jumpForce;
                 manager.playerAnimatorController.SetTrigger("Jump");
+                PlayJumpSound();
             }    
 
         }
@@ -41,6 +46,7 @@ public class JumpMover : MonoBehaviour
             if (Input.GetButtonDown("P2_Jump")){
                 forceMovement.y = jumpForce;
                 manager.playerAnimatorController.SetTrigger("Jump");
+                PlayJumpSound();
             }
         }
 
@@ -48,5 +54,12 @@ public class JumpMover : MonoBehaviour
         movement["JumpMover"] = moveInfo;
     }
 
+    void PlayJumpSound()
+    {
+        if (!GetComponentInParent<PlayerData>().jumpSound.isPlaying)
+        {
+            GetComponentInParent<PlayerData>().jumpSound.Play();
+        }
+    }
 
 }
