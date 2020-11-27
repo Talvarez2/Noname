@@ -9,21 +9,23 @@ public class SpawnPoint : MonoBehaviour
     private Color green = Color.green;
     private Light _light;
 
-    void Start() 
+    void Start()
     {
         _light = gameObject.GetComponentInChildren<Light>();
-    } 
+    }
 
-    public void ChangeColor(string color) 
+    public void ChangeColor(string color)
     {
-        
+
         if (color == "red")
         {
             _light.color = red;
-        } else if (color == "blue")
+        }
+        else if (color == "blue")
         {
             _light.color = blue;
-        } else if (color == "green")
+        }
+        else if (color == "green")
         {
             _light.color = green;
         }
@@ -48,11 +50,12 @@ public class SpawnPoint : MonoBehaviour
         return null;
     }
 
-    private void OnDrawGizmos()
+    public void activateAudio()
     {
-        Gizmos.color = Color.blue;
-        float radius = GetComponent<SphereCollider>().radius;
-        Gizmos.DrawSphere(transform.position, radius);
+        if (Time.time > 0.5f)
+        {
+            transform.GetComponent<SoundEffect>().playEnabled = true;
+        }
     }
 
 }

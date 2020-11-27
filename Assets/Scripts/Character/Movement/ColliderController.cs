@@ -13,6 +13,7 @@ public class ColliderController : MonoBehaviour
         {
             int playerLife = GetComponent<HealthAndDamage>().GetActualLife();
             levelExtras.GetComponent<SpawnSystem>().UpdateLastPlayerSpawnPoint(playerNum, other.gameObject, playerLife);
+            other.gameObject.GetComponent<SpawnPoint>().activateAudio();
         }
 
         if (other.tag == "ExitDoor")
@@ -20,7 +21,7 @@ public class ColliderController : MonoBehaviour
             levelExtras.GetComponent<WinSystem>().UpdatePlayerOnExitDoor(playerNum);
         }
 
-        if (other.tag == "IceFloor") 
+        if (other.tag == "IceFloor")
         {
             GetComponent<PlayerData>().isOnIceFloor = true;
         }
@@ -36,7 +37,7 @@ public class ColliderController : MonoBehaviour
             levelExtras.GetComponent<WinSystem>().UpdatePlayerOnExitDoor(playerNum);
         }
 
-        if (other.tag == "IceFloor") 
+        if (other.tag == "IceFloor")
         {
             GetComponent<PlayerData>().isOnIceFloor = false;
         }

@@ -6,10 +6,10 @@ public class SpawnSystem : MonoBehaviour
 {
     public GameObject startPositionPlayer1;
     public GameObject startPositionPlayer2;
-    private GameObject[] playerStartPosition = { null, null};
+    private GameObject[] playerStartPosition = { null, null };
     private GameObject[] actualPlayerSpawnPoint = { null, null };
     private GameObject[] lastPlayerSpawnPoint = { null, null };
-    private int[] playerLifeInActualSpawnPoint = { 100, 100};
+    private int[] playerLifeInActualSpawnPoint = { 100, 100 };
     private int[] playerLifeInLastSpawnPoint = { 100, 100 };
 
     private void Start()
