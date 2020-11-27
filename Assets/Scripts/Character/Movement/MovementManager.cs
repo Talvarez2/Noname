@@ -62,12 +62,12 @@ public class MovementManager : MonoBehaviour
      void OnGUI(){
  
         // GUI.Label(new Rect(50,20,200,100),"Y pos = " + player.transform.position.y.ToString("0.00"));
-        GUI.Label(new Rect(50 + (400*(playerNum-1)),30,200,100),"Static = "  + staticMovement.ToString());
-        GUI.Label(new Rect(50 + (400*(playerNum-1)),40,200,100),"Dynamic = " + dynamicMovement.ToString());
-        GUI.Label(new Rect(50 + (400*(playerNum-1)),50,200,100),"Force = "   + forceMovement.ToString());
-        GUI.Label(new Rect(50 + (400*(playerNum-1)),60,200,100),"Total = "   + totalMovement.ToString());
-        GUI.Label(new Rect(50 + (400*(playerNum-1)),70,200,100),"Projection = "   + projection.ToString());
-        GUI.Label(new Rect(50 + (400*(playerNum-1)),80,200,100),"Dot = "   + dot.ToString());
+        //GUI.Label(new Rect(50 + (400*(playerNum-1)),30,200,100),"Static = "  + staticMovement.ToString());
+        //GUI.Label(new Rect(50 + (400*(playerNum-1)),40,200,100),"Dynamic = " + dynamicMovement.ToString());
+        //GUI.Label(new Rect(50 + (400*(playerNum-1)),50,200,100),"Force = "   + forceMovement.ToString());
+        //GUI.Label(new Rect(50 + (400*(playerNum-1)),60,200,100),"Total = "   + totalMovement.ToString());
+        //GUI.Label(new Rect(50 + (400*(playerNum-1)),70,200,100),"Projection = "   + projection.ToString());
+        //GUI.Label(new Rect(50 + (400*(playerNum-1)),80,200,100),"Dot = "   + dot.ToString());
         
     }
         
