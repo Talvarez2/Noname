@@ -42,7 +42,7 @@ public class HealthAndDamage : MonoBehaviour
     public void InflictDamage(int damage)
     {
         StartCoroutine(ColorRedDamage());
-        if (!invincible && life > 0 && damage > 0)
+        if (!invincible && life > 0)
         {
             life -= damage;
             healtBar.SetHealth(life);
