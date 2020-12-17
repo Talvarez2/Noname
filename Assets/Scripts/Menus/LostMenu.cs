@@ -21,6 +21,12 @@ public class LostMenu : MonoBehaviour
         levelExtras = GameObject.FindWithTag("LevelExtras");
         levelExtras.GetComponent<LevelTimeScale>().StopLevel();
     }
+    public void Continue()
+    {
+        levelExtras.GetComponent<SpawnSystem>().SendPlayersToLastSpawnsPositions();
+        levelExtras.GetComponent<LevelTimeScale>().StartLevel();
+        SetActiveMenuItems(false);
+    }
     public void Retry()
     {
         levelExtras.GetComponent<SpawnSystem>().SendPlayersToInitialSpawnsPositions();
