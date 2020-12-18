@@ -15,6 +15,7 @@ public class SoundEffect : MonoBehaviour
 
     void Update()
     {
+        audioSource.volume = PlayerPrefs.GetFloat("Game Volume", 1);
         if (playEnabled == true && !audioSource.isPlaying)
         {
             audioSource.Play();

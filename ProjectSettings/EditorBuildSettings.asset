@@ -20,15 +20,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/YouLost.unity
     guid: 46901b222e256da49b91d18639c080ec
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Level-1.unity
     guid: fea43a29b5badaa4eb41077ad4df3572
   - enabled: 1
     path: Assets/Scenes/Level-2.unity
-    guid: abec4f99b6bbeb65f8a603b5e4198dc7
+    guid: 9146d29178aa273439f3419bfedb1369
   - enabled: 1
     path: Assets/Scenes/Level-3.unity
     guid: 81e8767ecf43b814a94e011accd24fdd
+  - enabled: 1
+    path: Assets/Scenes/Level-5.unity
+    guid: 1234b2fd36514a143bb651f39592e49a
   - enabled: 1
     path: Assets/Scenes/Level-6.unity
     guid: f5b1ca2439f0f754ea7104ce46f70a78
