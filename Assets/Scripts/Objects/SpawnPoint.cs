@@ -17,7 +17,6 @@ public class SpawnPoint : MonoBehaviour
     void Start()
     {
         _light = gameObject.GetComponentInChildren<Light>();
-        
 
         spriteRed = this.transform.Find("SpriteRed").GetComponent<SpriteRenderer>();
         spriteGreen = this.transform.Find("SpriteGreen").GetComponent<SpriteRenderer>();
