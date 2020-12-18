@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuCamera;
     public GameObject pauseMenuEventSystem;
     private GameObject levelExtras;
+    private GameObject checkpoints;
 
     void Start()
     {
@@ -17,6 +18,11 @@ public class PauseMenu : MonoBehaviour
         GameObject temp = this.transform.Find("OptionsMenu").gameObject;
         temp = temp.transform.Find("MusicVolumeSlider").gameObject;
         temp.GetComponent<Slider>().normalizedValue = volume;
+
+        float volumeGame = PlayerPrefs.GetFloat("Game Volume", 1);
+        GameObject tempGame = this.transform.Find("OptionsMenu").gameObject;
+        tempGame = tempGame.transform.Find("GameVolumeSlider").gameObject;
+        tempGame.GetComponent<Slider>().normalizedValue = volumeGame;
     }
 
     void Update()
@@ -64,5 +70,14 @@ public class PauseMenu : MonoBehaviour
         audioSource.volume = volume;
         PlayerPrefs.SetFloat("Music Volume", volume);
     }
+
+    public void changeGameVolume(float volume)
+    {
+        //AudioSource audioSource = levelExtras.GetComponent<AudioSource>();
+        //audioSource.volume = volume;
+        PlayerPrefs.SetFloat("Game Volume", volume);
+    }
+
+
 
 }

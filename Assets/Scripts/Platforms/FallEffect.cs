@@ -5,37 +5,46 @@ using UnityEngine;
 public class FallEffect : MonoBehaviour
 {
     public int timeBeforeFall = 5;
-    public int timeBeforeDestroy = 2;
-    public int timeBeforeReapear = 10;
+    public int timeBeforeDestroy = 1;
+    public int timeToRespawn = 1;
     BoxCollider m_Collider;
     MeshRenderer m_Renderer;
     Rigidbody rigidBody;
     private MeshRenderer meshRenderer;
-    private Vector3 startPostition;
-    private bool shuffleColor = true;
+    public bool respawn = false;
+    private Vector3 respawnPosition;
+    private Quaternion respawnRotation;
+    private BoxCollider boxCollider;
+    private bool toogle = false;
 
     private void Start() 
     {
         // Fetch the Collider from the GameObject
         m_Collider = GetComponent<BoxCollider>();
-        m_Renderer = GetComponent<MeshRenderer>();
-        BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
-        startPostition = this.transform.position;
+        boxCollider = gameObject.AddComponent<BoxCollider>();
         rigidBody = gameObject.AddComponent<Rigidbody>();
         rigidBody.isKinematic = true;
         rigidBody.useGravity = false;
         boxCollider.size = new Vector3(1, 2, 1);
         boxCollider.isTrigger = true;
         meshRenderer = GetComponent<MeshRenderer>();
+        if (respawn == true) {
+            respawnPosition = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+            respawnRotation = new Quaternion(this.transform.rotation.w,this.transform.rotation.x, this.transform.rotation.y,this.transform.rotation.z);
+        }
     }
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Player")
         {
+            toogle = true;
             StartCoroutine(ToogleImageSize());
             shuffleColor = true;
             StartCoroutine(Fall());
             StartCoroutine(Destroy());
+            if (respawn == true) {
+                StartCoroutine(Respawn());
+            }
         }
     }
 
@@ -61,7 +70,7 @@ public class FallEffect : MonoBehaviour
 
     IEnumerator ToogleImageSize()
     {
-        while (shuffleColor)
+        while (toogle)
         {
             meshRenderer.material.color = Color.red;
             yield return new WaitForSeconds(0.2F);
@@ -74,10 +83,27 @@ public class FallEffect : MonoBehaviour
     {
         // wait and then destroy
         yield return new WaitForSeconds(timeBeforeFall+timeBeforeDestroy);
-        m_Renderer.enabled = false;
-        m_Collider.enabled = false;
-        // Destroy(this.gameObject);
-        yield return new WaitForSeconds(timeBeforeFall+timeBeforeDestroy+timeBeforeReapear);
-        restart();
+        if (respawn == true) {
+            meshRenderer.enabled = false;
+            boxCollider.enabled = false;
+            m_Collider.enabled = false;
+        } else {
+            Destroy(this.gameObject);
+        }
+    }
+
+
+    IEnumerator Respawn()
+    {
+        // wait and then destroy
+        yield return new WaitForSeconds(timeBeforeFall+timeBeforeDestroy+timeToRespawn);
+        toogle = false;
+        rigidBody.useGravity = false;
+        rigidBody.isKinematic = true;
+        this.transform.position = respawnPosition;
+        this.transform.rotation = respawnRotation;
+        meshRenderer.enabled = true;
+        boxCollider.enabled = true;
+        m_Collider.enabled = true;
     }
 }
