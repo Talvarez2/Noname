@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         float volume = PlayerPrefs.GetFloat("Music Volume", 1);
+        float volumeGame = PlayerPrefs.GetFloat("Game Volume", 1);
 
         audioSource = GetComponent<AudioSource>();
         audioSource.volume = volume;
@@ -22,12 +23,21 @@ public class MainMenu : MonoBehaviour
         GameObject temp = this.transform.Find("OptionsMenu").gameObject;
         temp = temp.transform.Find("MusicVolumeSlider").gameObject;
         temp.GetComponent<Slider>().normalizedValue = volume;
+
+        GameObject tempGame = this.transform.Find("OptionsMenu").gameObject;
+        tempGame = tempGame.transform.Find("GameVolumeSlider").gameObject;
+        tempGame.GetComponent<Slider>().normalizedValue = volumeGame;
     }
 
     public void changeAudioVolume(float volume)
     {
         audioSource.volume = volume;
         PlayerPrefs.SetFloat("Music Volume", volume);
+    }
+
+    public void changeGameVolume(float volumeGame)
+    {
+        PlayerPrefs.SetFloat("Game Volume", volumeGame);
     }
 
     public void changeToLevel(int levelNumber)
