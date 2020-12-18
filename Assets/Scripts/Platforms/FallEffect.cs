@@ -8,6 +8,7 @@ public class FallEffect : MonoBehaviour
     public int timeBeforeDestroy = 1;
     public int timeToRespawn = 1;
     BoxCollider m_Collider;
+    MeshRenderer m_Renderer;
     Rigidbody rigidBody;
     private MeshRenderer meshRenderer;
     public bool respawn = false;
@@ -38,6 +39,7 @@ public class FallEffect : MonoBehaviour
         {
             toogle = true;
             StartCoroutine(ToogleImageSize());
+            shuffleColor = true;
             StartCoroutine(Fall());
             StartCoroutine(Destroy());
             if (respawn == true) {
@@ -46,9 +48,21 @@ public class FallEffect : MonoBehaviour
         }
     }
 
+    private void restart(){
+        rigidBody.useGravity = false;
+        rigidBody.isKinematic = true;
+        m_Renderer.enabled = true;
+        m_Collider.enabled = true;
+        this.transform.position = startPostition;
+        shuffleColor = false;
+        meshRenderer.material.color = new Color(1, 1, 1, 0_01f);
+
+    }
+
     IEnumerator Fall()
     {
         // wait and then fall
+        Debug.Log("fall");
         yield return new WaitForSeconds(timeBeforeFall);
         rigidBody.useGravity = true;
         rigidBody.isKinematic = false;
