@@ -39,7 +39,6 @@ public class FallEffect : MonoBehaviour
         {
             toogle = true;
             StartCoroutine(ToogleImageSize());
-            shuffleColor = true;
             StartCoroutine(Fall());
             StartCoroutine(Destroy());
             if (respawn == true) {
@@ -53,8 +52,8 @@ public class FallEffect : MonoBehaviour
         rigidBody.isKinematic = true;
         m_Renderer.enabled = true;
         m_Collider.enabled = true;
-        this.transform.position = startPostition;
-        shuffleColor = false;
+        this.transform.position = respawnPosition;
+        toogle = false;
         meshRenderer.material.color = new Color(1, 1, 1, 0_01f);
 
     }
