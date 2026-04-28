@@ -1,75 +1,57 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Aggregates all movement contributions from mover components each frame
+/// and applies the final movement via CharacterController.Move().
+/// Each mover registers a Vector3[3] array: [0] static, [1] dynamic, [2] force.
+/// </summary>
 public class MovementManager : MonoBehaviour
 {
-    // Vector3
-
-    //Dictionary of arrays. Length 3. Static Movement, dynamic Movement, force Movement in order.
-    public IDictionary<string, Vector3[]> Vector3Stack = new Dictionary<string, Vector3[]>(); 
+    public IDictionary<string, Vector3[]> Vector3Stack = new Dictionary<string, Vector3[]>();
     public CharacterController player;
-
-    private Vector3 staticMovement;
-    private Vector3 dynamicMovement = new Vector3(0,0,0);
-    private Vector3 testVector = new Vector3(1,0,0);
-    private Vector3 forceMovement;
-    private Vector3 totalMovement;
-
-
-    private int max_dist = 20;
-    float dot;
-    private bool ropeOn = true;
-
-    private int playerNum;
-    private Vector3 projection, position_delta;
     public Animator playerAnimatorController;
 
-    void Start(){
+    private Vector3 _staticMovement;
+    private Vector3 _dynamicMovement;
+    private Vector3 _forceMovement;
+    private Vector3 _totalMovement;
+    private bool _ropeOn = true;
+
+    private void Start()
+    {
         player = GetComponentInParent<CharacterController>();
-        playerNum = GetComponentInParent<PlayerData>().playerNum;
-
     }
 
-    void Update(){
+    private void Update()
+    {
         playerAnimatorController.SetBool("IsGrounded", player.isGrounded);
-        Debug.Log(player.isGrounded);
-        staticMovement = new Vector3(0,0,0);
-        if (player.isGrounded) dynamicMovement = new Vector3(0,0,0);
-        forceMovement  = new Vector3(0,0,0);
-        totalMovement  = new Vector3(0,0,0);
 
-        foreach (KeyValuePair<string,Vector3[]> kvp in Vector3Stack){
-            staticMovement  += kvp.Value[0];
-            dynamicMovement += kvp.Value[1] * Time.deltaTime;
-            forceMovement   += kvp.Value[2];
+        _staticMovement = Vector3.zero;
+        if (player.isGrounded) _dynamicMovement = Vector3.zero;
+        _forceMovement = Vector3.zero;
+        _totalMovement = Vector3.zero;
+
+        foreach (KeyValuePair<string, Vector3[]> kvp in Vector3Stack)
+        {
+            _staticMovement += kvp.Value[0];
+            _dynamicMovement += kvp.Value[1] * Time.deltaTime;
+            _forceMovement += kvp.Value[2];
         }
-        
-        dynamicMovement += forceMovement;
-        
-        totalMovement = staticMovement + dynamicMovement;
-        if (ropeOn){
-            projection = GetComponent<RopeMover>().ropeFunction(totalMovement);
-            position_delta = GetComponent<RopeMover>().dotFunc(totalMovement);
-            dynamicMovement -= projection*Time.deltaTime;
-            staticMovement += position_delta;
-            totalMovement = staticMovement + dynamicMovement;
-        }        
 
-        player.Move(totalMovement * Time.deltaTime);
-    }
+        _dynamicMovement += _forceMovement;
+        _totalMovement = _staticMovement + _dynamicMovement;
 
-     void OnGUI(){
- 
-        // GUI.Label(new Rect(50,20,200,100),"Y pos = " + player.transform.position.y.ToString("0.00"));
-        //GUI.Label(new Rect(50 + (400*(playerNum-1)),30,200,100),"Static = "  + staticMovement.ToString());
-        //GUI.Label(new Rect(50 + (400*(playerNum-1)),40,200,100),"Dynamic = " + dynamicMovement.ToString());
-        //GUI.Label(new Rect(50 + (400*(playerNum-1)),50,200,100),"Force = "   + forceMovement.ToString());
-        //GUI.Label(new Rect(50 + (400*(playerNum-1)),60,200,100),"Total = "   + totalMovement.ToString());
-        //GUI.Label(new Rect(50 + (400*(playerNum-1)),70,200,100),"Projection = "   + projection.ToString());
-        //GUI.Label(new Rect(50 + (400*(playerNum-1)),80,200,100),"Dot = "   + dot.ToString());
-        
+        if (_ropeOn)
+        {
+            RopeMover ropeMover = GetComponent<RopeMover>();
+            Vector3 projection = ropeMover.CalculateRopeProjection(_totalMovement);
+            Vector3 positionDelta = ropeMover.CalculateRopePull(_totalMovement);
+            _dynamicMovement -= projection * Time.deltaTime;
+            _staticMovement += positionDelta;
+            _totalMovement = _staticMovement + _dynamicMovement;
+        }
+
+        player.Move(_totalMovement * Time.deltaTime);
     }
-        
 }
-

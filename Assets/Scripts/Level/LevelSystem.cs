@@ -1,45 +1,41 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Detects the current level from the active scene name and checks whether a next level exists.
+/// </summary>
 public class LevelSystem : MonoBehaviour
 {
     [SerializeField] private int implementedLevels = 1;
 
     private void Start()
     {
-        int c = SceneManager.sceneCount;
-        for (int i = 0; i < c; i++)
+        int sceneCount = SceneManager.sceneCount;
+        for (int i = 0; i < sceneCount; i++)
         {
-            Scene s = SceneManager.GetSceneAt(i);
-            if (s.name.Contains("Level"))
+            Scene scene = SceneManager.GetSceneAt(i);
+            if (scene.name.Contains("Level") && scene != SceneManager.GetActiveScene())
             {
-                Scene activeScene = SceneManager.GetActiveScene();
-                if (s != activeScene)
-                {
-                    SceneManager.SetActiveScene(s);
-                }
+                SceneManager.SetActiveScene(scene);
             }
         }
     }
 
+    /// <summary>
+    /// Returns the current level number parsed from the active scene name.
+    /// </summary>
     public int GetActualLevel()
     {
-        Scene s = SceneManager.GetActiveScene();
-        int actualLevel = Int32.Parse(s.name.Substring(s.name.Length - 1));
-        return actualLevel;
+        Scene scene = SceneManager.GetActiveScene();
+        return Int32.Parse(scene.name.Substring(scene.name.Length - 1));
     }
 
+    /// <summary>
+    /// Returns true if there is a next level available.
+    /// </summary>
     public bool CheckNextLevel()
     {
-        if (GetActualLevel() < implementedLevels)
-        {
-            return true;
-        }
-
-        return false;
+        return GetActualLevel() < implementedLevels;
     }
-
 }

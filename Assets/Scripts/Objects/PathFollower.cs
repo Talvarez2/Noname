@@ -1,48 +1,46 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Moves an object along a path defined by child Node components.
+/// Loops back to the first node after reaching the last.
+/// </summary>
 public class PathFollower : MonoBehaviour
 {
-    private Node[] pathNode;
-    private float startTime;
-    private Vector3 targetPosition;
-    private Vector3 initialPosition;
-    private float totalDistance;
-    private float coveredDistance;
-    private int currentNode = 0;
     public float moveSpeed;
 
-    void Start()
+    private Node[] _pathNodes;
+    private float _startTime;
+    private Vector3 _initialPosition;
+    private Vector3 _targetPosition;
+    private float _totalDistance;
+    private int _currentNode;
+
+    private void Start()
     {
-        pathNode = transform.parent.GetComponentsInChildren<Node>();
-        NextNode();
+        _pathNodes = transform.parent.GetComponentsInChildren<Node>();
+        AdvanceToNextNode();
     }
 
-    void Update()
+    private void Update()
     {
-        coveredDistance = (Time.time - startTime) * moveSpeed;
+        float coveredDistance = (Time.time - _startTime) * moveSpeed;
 
-        if (transform.position != targetPosition)
+        if (transform.position != _targetPosition)
         {
-            transform.position = Vector3.Lerp(initialPosition, targetPosition, coveredDistance / totalDistance);
+            transform.position = Vector3.Lerp(_initialPosition, _targetPosition, coveredDistance / _totalDistance);
         }
         else
         {
-            NextNode();
+            AdvanceToNextNode();
         }
     }
 
-    private void NextNode()
+    private void AdvanceToNextNode()
     {
-        startTime = Time.time;
-        initialPosition = transform.position;
-        currentNode += 1;
-        if (currentNode == pathNode.Length)
-        {
-            currentNode = 0;
-        }
-        targetPosition = pathNode[currentNode].transform.position;
-        totalDistance = Vector3.Distance(initialPosition, targetPosition);
+        _startTime = Time.time;
+        _initialPosition = transform.position;
+        _currentNode = (_currentNode + 1) % _pathNodes.Length;
+        _targetPosition = _pathNodes[_currentNode].transform.position;
+        _totalDistance = Vector3.Distance(_initialPosition, _targetPosition);
     }
 }

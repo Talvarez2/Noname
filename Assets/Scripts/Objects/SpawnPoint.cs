@@ -1,83 +1,61 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Checkpoint spawn point that changes color to indicate activation state.
+/// Blue = unvisited, Green = visited by one player, Red = confirmed by both players.
+/// </summary>
 public class SpawnPoint : MonoBehaviour
 {
-    private Color blue = Color.blue;
-    private Color red = Color.red;
-    private Color green = Color.green;
-    private GameObject Light;
     private Light _light;
-    private SpriteRenderer spriteRed;
-    private SpriteRenderer spriteGreen;
-    private SpriteRenderer spriteBlue;
+    private SpriteRenderer _spriteRed;
+    private SpriteRenderer _spriteGreen;
+    private SpriteRenderer _spriteBlue;
 
-
-    void Start()
+    private void Start()
     {
-        _light = gameObject.GetComponentInChildren<Light>();
+        _light = GetComponentInChildren<Light>();
+        _spriteRed = transform.Find("SpriteRed").GetComponent<SpriteRenderer>();
+        _spriteGreen = transform.Find("SpriteGreen").GetComponent<SpriteRenderer>();
+        _spriteBlue = transform.Find("SpriteBlue").GetComponent<SpriteRenderer>();
 
-        spriteRed = this.transform.Find("SpriteRed").GetComponent<SpriteRenderer>();
-        spriteGreen = this.transform.Find("SpriteGreen").GetComponent<SpriteRenderer>();
-        spriteBlue = this.transform.Find("SpriteBlue").GetComponent<SpriteRenderer>();
-
-        spriteRed.enabled = false;
-        spriteGreen.enabled = false;
-        spriteBlue.enabled = true;
+        _spriteRed.enabled = false;
+        _spriteGreen.enabled = false;
+        _spriteBlue.enabled = true;
     }
 
+    /// <summary>
+    /// Changes the checkpoint color and updates the visible sprite.
+    /// </summary>
     public void ChangeColor(string color)
     {
+        _spriteRed.enabled = color == "red";
+        _spriteGreen.enabled = color == "green";
+        _spriteBlue.enabled = color == "blue";
 
-        if (color == "red")
-        {
-            _light.color = red;
-            spriteRed.enabled = true;
-            spriteGreen.enabled = false;
-            spriteBlue.enabled = false;
-        }
-        else if (color == "blue")
-        {
-            _light.color = blue;
-            spriteRed.enabled = false;
-            spriteGreen.enabled = false;
-            spriteBlue.enabled = true;
-        }
-        else if (color == "green")
-        {
-            _light.color = green;
-            spriteRed.enabled = false;
-            spriteGreen.enabled = true;
-            spriteBlue.enabled = false;
-        }
+        if (color == "red") _light.color = Color.red;
+        else if (color == "green") _light.color = Color.green;
+        else if (color == "blue") _light.color = Color.blue;
     }
 
+    /// <summary>
+    /// Returns the current checkpoint color as a string.
+    /// </summary>
     public string GetColor()
     {
-        Color actualColor = _light.color;
-
-        if (actualColor.Equals(red))
-        {
-            return "red";
-        }
-        if (actualColor.Equals(blue))
-        {
-            return "blue";
-        }
-        if (actualColor.Equals(green))
-        {
-            return "green";
-        }
+        if (_light.color == Color.red) return "red";
+        if (_light.color == Color.blue) return "blue";
+        if (_light.color == Color.green) return "green";
         return null;
     }
 
-    public void activateAudio()
+    /// <summary>
+    /// Triggers the checkpoint sound effect.
+    /// </summary>
+    public void ActivateAudio()
     {
         if (Time.time > 0.5f)
         {
-            transform.GetComponent<SoundEffect>().playEnabled = true;
+            GetComponent<SoundEffect>().playEnabled = true;
         }
     }
-
 }

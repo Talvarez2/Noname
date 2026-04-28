@@ -1,46 +1,39 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/// <summary>
+/// Applies constant downward gravity to the player. When grounded, applies a small
+/// downward force to keep the CharacterController snapped to the ground.
+/// </summary>
 public class GravityMover : MonoBehaviour
-{ 
-    
-    public float gravity = 10;
+{
+    public float gravity = 10f;
 
-    private MovementManager manager;
-    private Vector3[] moveInfo = {new Vector3(), new Vector3(), new Vector3()};
-    private Vector3 staticMovement = new Vector3();
-    private Vector3 dynamicMovement = new Vector3();
-    private float fallVelocity;
+    private MovementManager _manager;
+    private Vector3[] _moveInfo = { new Vector3(), new Vector3(), new Vector3() };
+    private IDictionary<string, Vector3[]> _movement;
+    private CharacterController _player;
 
-    IDictionary<string, Vector3[]> movement;
-    CharacterController player;
-
-    void Start()
+    private void Start()
     {
-        manager = GetComponent<MovementManager>(); 
-        player = manager.player;
-        movement = manager.Vector3Stack;
-        movement.Add("GravityMover",moveInfo);
+        _manager = GetComponent<MovementManager>();
+        _player = _manager.player;
+        _movement = _manager.Vector3Stack;
+        _movement.Add("GravityMover", _moveInfo);
     }
-    void Update(){
-        staticMovement = new Vector3();
-        dynamicMovement = new Vector3();
 
-        if (player.isGrounded) staticMovement.y = -2f;
-        else  dynamicMovement.y =  -gravity;
+    private void Update()
+    {
+        Vector3 staticMovement = Vector3.zero;
+        Vector3 dynamicMovement = Vector3.zero;
 
-        moveInfo[0] = staticMovement;
-        moveInfo[1] = dynamicMovement;
-        movement["GravityMover"] = moveInfo;
+        if (_player.isGrounded)
+            staticMovement.y = -2f;
+        else
+            dynamicMovement.y = -gravity;
+
+        _moveInfo[0] = staticMovement;
+        _moveInfo[1] = dynamicMovement;
+        _movement["GravityMover"] = _moveInfo;
     }
-    // void OnGUI(){
- 
-    //     // GUI.Label(new Rect(50,20,200,100),"Y pos = " + player.transform.position.y.ToString("0.00"));
-    //     GUI.Label(new Rect(50,30,200,100),"Y vel = " + fallVelocity.ToString("0.00"));
-    //     GUI.Label(new Rect(50,40,200,100),"Grounded = " + player.isGrounded.ToString());
-        
-    // }
-    
 }

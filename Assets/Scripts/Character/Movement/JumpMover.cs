@@ -1,65 +1,51 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Applies jump force when the player presses their jump button while grounded.
+/// </summary>
 public class JumpMover : MonoBehaviour
 {
-    public float jumpForce = 10;
+    public float jumpForce = 10f;
 
-    private float fallVelocity;
-    private MovementManager manager;
-    private Vector3[] moveInfo = {new Vector3(), new Vector3(), new Vector3()};
-    private Vector3 forceMovement = new Vector3();
+    private MovementManager _manager;
+    private Vector3[] _moveInfo = { new Vector3(), new Vector3(), new Vector3() };
+    private IDictionary<string, Vector3[]> _movement;
+    private int _playerNum;
 
-    CharacterController player;
-    IDictionary<string, Vector3[]> movement;
-
-    private bool playEnabled = false;
-    private int playerNum;
-
-
-    void Start()
+    private void Start()
     {
-        manager = GetComponent<MovementManager>();
-        player = manager.player;
-        movement = manager.Vector3Stack;
-        movement.Add("JumpMover", moveInfo);
-        playerNum = GetComponentInParent<PlayerData>().playerNum;
-
+        _manager = GetComponent<MovementManager>();
+        _movement = _manager.Vector3Stack;
+        _movement.Add("JumpMover", _moveInfo);
+        _playerNum = GetComponentInParent<PlayerData>().playerNum;
     }
 
-    void Update()
+    private void Update()
     {
-        forceMovement = new Vector3();
+        Vector3 forceMovement = Vector3.zero;
 
-        if (player.isGrounded && playerNum == 1)
+        if (_manager.player.isGrounded)
         {
-            if (Input.GetButtonDown("P1_Jump")) {
+            string jumpButton = _playerNum == 1 ? "P1_Jump" : "P2_Jump";
+            if (Input.GetButtonDown(jumpButton))
+            {
                 forceMovement.y = jumpForce;
-                manager.playerAnimatorController.SetTrigger("Jump");
-                PlayJumpSound();
-            }    
-
-        }
-        else if (player.isGrounded && playerNum == 2)
-        {
-            if (Input.GetButtonDown("P2_Jump")){
-                forceMovement.y = jumpForce;
-                manager.playerAnimatorController.SetTrigger("Jump");
+                _manager.playerAnimatorController.SetTrigger("Jump");
                 PlayJumpSound();
             }
         }
 
-        moveInfo[2] = forceMovement;
-        movement["JumpMover"] = moveInfo;
+        _moveInfo[2] = forceMovement;
+        _movement["JumpMover"] = _moveInfo;
     }
 
-    void PlayJumpSound()
+    private void PlayJumpSound()
     {
-        if (!GetComponentInParent<PlayerData>().jumpSound.isPlaying)
+        AudioSource jumpSound = GetComponentInParent<PlayerData>().jumpSound;
+        if (!jumpSound.isPlaying)
         {
-            GetComponentInParent<PlayerData>().jumpSound.Play();
+            jumpSound.Play();
         }
     }
-
 }

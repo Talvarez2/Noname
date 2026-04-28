@@ -1,14 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Deals damage to players on contact with a saw hazard.
+/// </summary>
 public class SawDamage : MonoBehaviour
 {
-
     public int damage;
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             other.GetComponent<HealthAndDamage>().InflictDamage(damage);
         }
@@ -16,7 +17,7 @@ public class SawDamage : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             other.GetComponent<HealthAndDamage>().InflictDamage(damage);
         }

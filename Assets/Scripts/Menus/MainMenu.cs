@@ -1,59 +1,63 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
+/// <summary>
+/// Main menu controller handling level selection, volume settings, and quitting.
+/// </summary>
 public class MainMenu : MonoBehaviour
 {
+    private AudioSource _audioSource;
+    private const string LevelScenePrefix = "Level-";
+    private const string PauseSceneName = "Pause";
+    private const string LostSceneName = "YouLost";
+    private const string WinSceneName = "YouWin";
 
-    private AudioSource audioSource;
-    private string standardLevelSceneName = "Level-";
-    private string pauseSceneName = "Pause";
-    private string lostSceneName = "YouLost";
-    private string winSceneName = "YouWin";
-
-    void Start()
+    private void Start()
     {
-        float volume = PlayerPrefs.GetFloat("Music Volume", 1);
-        float volumeGame = PlayerPrefs.GetFloat("Game Volume", 1);
+        float musicVolume = PlayerPrefs.GetFloat("Music Volume", 1f);
+        float gameVolume = PlayerPrefs.GetFloat("Game Volume", 1f);
 
-        audioSource = GetComponent<AudioSource>();
-        audioSource.volume = volume;
+        _audioSource = GetComponent<AudioSource>();
+        _audioSource.volume = musicVolume;
 
-        GameObject temp = this.transform.Find("OptionsMenu").gameObject;
-        temp = temp.transform.Find("MusicVolumeSlider").gameObject;
-        temp.GetComponent<Slider>().normalizedValue = volume;
-
-        GameObject tempGame = this.transform.Find("OptionsMenu").gameObject;
-        tempGame = tempGame.transform.Find("GameVolumeSlider").gameObject;
-        tempGame.GetComponent<Slider>().normalizedValue = volumeGame;
+        transform.Find("OptionsMenu/MusicVolumeSlider").GetComponent<Slider>().normalizedValue = musicVolume;
+        transform.Find("OptionsMenu/GameVolumeSlider").GetComponent<Slider>().normalizedValue = gameVolume;
     }
 
-    public void changeAudioVolume(float volume)
+    /// <summary>
+    /// Updates the music volume and saves the preference.
+    /// </summary>
+    public void ChangeAudioVolume(float volume)
     {
-        audioSource.volume = volume;
+        _audioSource.volume = volume;
         PlayerPrefs.SetFloat("Music Volume", volume);
     }
 
-    public void changeGameVolume(float volumeGame)
+    /// <summary>
+    /// Updates the game sound effects volume preference.
+    /// </summary>
+    public void ChangeGameVolume(float volume)
     {
-        PlayerPrefs.SetFloat("Game Volume", volumeGame);
+        PlayerPrefs.SetFloat("Game Volume", volume);
     }
 
-    public void changeToLevel(int levelNumber)
+    /// <summary>
+    /// Loads the specified level along with overlay scenes (Pause, YouLost, YouWin).
+    /// </summary>
+    public void ChangeToLevel(int levelNumber)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.UnloadSceneAsync(currentScene);
-
-        string levelSceneName = standardLevelSceneName.Insert(standardLevelSceneName.Length, levelNumber.ToString());
-
-        SceneManager.LoadScene(levelSceneName);
-        SceneManager.LoadScene(pauseSceneName, LoadSceneMode.Additive);
-        SceneManager.LoadScene(lostSceneName, LoadSceneMode.Additive);
-        SceneManager.LoadScene(winSceneName, LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        SceneManager.LoadScene(LevelScenePrefix + levelNumber);
+        SceneManager.LoadScene(PauseSceneName, LoadSceneMode.Additive);
+        SceneManager.LoadScene(LostSceneName, LoadSceneMode.Additive);
+        SceneManager.LoadScene(WinSceneName, LoadSceneMode.Additive);
     }
 
-    public void doExitGame()
+    /// <summary>
+    /// Exits the application.
+    /// </summary>
+    public void DoExitGame()
     {
         Application.Quit();
     }

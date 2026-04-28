@@ -1,32 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Toggleable sign that switches between skull and heart sprites on trigger contact.
+/// </summary>
 public class ChangingSigns : MonoBehaviour
 {
     public Sprite SkullPanel;
     public Sprite HeartPanel;
     public bool Damage;
     public bool Change;
-    private SpriteRenderer spriteRenderer;
 
-    // Start is called before the first frame update
-    void Start()
+    private SpriteRenderer _spriteRenderer;
+
+    private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         SetSprite();
     }
 
-    void SetSprite()
+    private void SetSprite()
     {
-        if (Damage){
-            spriteRenderer.sprite = SkullPanel;
-        } else {
-            spriteRenderer.sprite = HeartPanel;
-        }
+        _spriteRenderer.sprite = Damage ? SkullPanel : HeartPanel;
     }
 
-    private void OnTriggerEnter(Collider other) {
+    private void OnTriggerEnter(Collider other)
+    {
         if (Change)
         {
             Change = false;
@@ -34,5 +32,4 @@ public class ChangingSigns : MonoBehaviour
             SetSprite();
         }
     }
-
 }

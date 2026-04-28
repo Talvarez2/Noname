@@ -1,65 +1,43 @@
-﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Reads horizontal input for the player and converts it into movement.
+/// Applies reduced speed when the player is on an ice floor.
+/// </summary>
 public class InputMover : MonoBehaviour
 {
-    // Start is called before the first frame update
     public Camera mainCamera;
-    public float playerSpeed = 5;
-    public float playerSpeedOnIce = 0.1f; 
+    public float playerSpeed = 5f;
+    public float playerSpeedOnIce = 0.1f;
 
+    private MovementManager _manager;
+    private IDictionary<string, Vector3[]> _movement;
+    private Vector3[] _moveInfo = { new Vector3(), new Vector3(), new Vector3() };
+    private Vector3 _camRight;
 
-    private MovementManager manager;
-
-    CharacterController player;
-    IDictionary<string, Vector3[]> movement;
-    private Vector3[] moveInfo = {new Vector3(), new Vector3(), new Vector3()};
-    private Vector3 staticMovement = new Vector3();
-
-
-    private float horizontalMove;
-    private Vector3 playerInput, camRight, movePlayer;
-
-    void Start()
+    private void Start()
     {
-        manager = GetComponent<MovementManager>();
-        player = manager.player;
-        movement = manager.Vector3Stack;
-        movement.Add("InputMover", moveInfo);
-        camRight = mainCamera.transform.right;
+        _manager = GetComponent<MovementManager>();
+        _movement = _manager.Vector3Stack;
+        _movement.Add("InputMover", _moveInfo);
+        _camRight = mainCamera.transform.right;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         int playerNum = GetComponentInParent<PlayerData>().playerNum;
-        if (playerNum == 1)
-        {
-            horizontalMove = Input.GetAxis("P1_Horizontal");
-        }
-        else
-        {
-            horizontalMove = Input.GetAxis("P2_Horizontal");
-        }
+        string axis = playerNum == 1 ? "P1_Horizontal" : "P2_Horizontal";
+        float horizontalMove = Input.GetAxis(axis);
 
-        playerInput = new Vector3(horizontalMove, 0, 0);
-        bool playerIsOnIce = GetComponentInParent<PlayerData>().isOnIceFloor;
-        if (playerIsOnIce)
-        {
-            staticMovement = playerInput.x * camRight * playerSpeedOnIce; 
-        } else
-        {
-            staticMovement = playerInput.x * camRight * playerSpeed;    
-        }
+        Vector3 playerInput = new Vector3(horizontalMove, 0f, 0f);
+        bool isOnIce = GetComponentInParent<PlayerData>().isOnIceFloor;
+        float speed = isOnIce ? playerSpeedOnIce : playerSpeed;
 
-        moveInfo[0] = staticMovement;
-        movement["InputMover"] = moveInfo;
+        _moveInfo[0] = playerInput.x * _camRight * speed;
+        _movement["InputMover"] = _moveInfo;
 
-        // Animator
-        manager.playerAnimatorController.SetFloat("WalkVelocity", playerInput.magnitude * playerSpeed);
-        manager.playerAnimatorController.SetBool("Left", (playerInput.x < 0));
-
-
+        _manager.playerAnimatorController.SetFloat("WalkVelocity", playerInput.magnitude * playerSpeed);
+        _manager.playerAnimatorController.SetBool("Left", playerInput.x < 0f);
     }
 }

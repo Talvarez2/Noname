@@ -1,67 +1,49 @@
-﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Allows a player to pull the other player toward them via the rope.
+/// Applies a force impulse in the direction from the other player to this player.
+/// </summary>
 public class PullRopeMover : MonoBehaviour
 {
-    public float pullForce = 10;
-    private Vector3[] moveInfo = { new Vector3(), new Vector3(), new Vector3() };
-    private MovementManager otherManager;
-    private Vector3 forceMovement;
+    public float pullForce = 10f;
     [SerializeField] private float pullCooldown = 1f;
-    private float lastPullTime;
-    IDictionary<string, Vector3[]> movement;
 
-    CharacterController player;
-    CharacterController otherPlayer;
+    private Vector3[] _moveInfo = { new Vector3(), new Vector3(), new Vector3() };
+    private IDictionary<string, Vector3[]> _movement;
+    private CharacterController _player;
+    private CharacterController _otherPlayer;
+    private float _lastPullTime;
 
-
-    void Start()
+    private void Start()
     {
-        player = GetComponent<MovementManager>().player;
-        otherPlayer = GetComponent<RopeMover>().otherPlayer;
-        otherManager = otherPlayer.gameObject.GetComponentInChildren<MovementManager>();
-        movement = otherManager.Vector3Stack;
-        movement.Add("PullRopeMover", moveInfo);
-        lastPullTime = Time.time;
+        _player = GetComponent<MovementManager>().player;
+        _otherPlayer = GetComponent<RopeMover>().otherPlayer;
+        MovementManager otherManager = _otherPlayer.gameObject.GetComponentInChildren<MovementManager>();
+        _movement = otherManager.Vector3Stack;
+        _movement.Add("PullRopeMover", _moveInfo);
+        _lastPullTime = Time.time;
     }
 
-    void Update()
+    private void Update()
     {
-        forceMovement = new Vector3();
-        int playerNum = GetComponentInParent<PlayerData>().playerNum;
+        Vector3 forceMovement = Vector3.zero;
 
-        if (Time.time - lastPullTime > pullCooldown)
+        if (Time.time - _lastPullTime > pullCooldown && _player.isGrounded)
         {
-            if (player.isGrounded && playerNum == 1)
-            {
-                if (Input.GetButtonDown("P1_Pull"))
-                {
-                    forceMovement = GetForceMovement();
-                }
+            int playerNum = GetComponentInParent<PlayerData>().playerNum;
+            string pullButton = playerNum == 1 ? "P1_Pull" : "P2_Pull";
 
-            }
-            else if (player.isGrounded && playerNum == 2)
+            if (Input.GetButtonDown(pullButton))
             {
-                if (Input.GetButtonDown("P2_Pull"))
-                {
-                    forceMovement = GetForceMovement();
-                }
+                Vector3 direction = (_player.transform.position - _otherPlayer.transform.position).normalized;
+                forceMovement = direction * pullForce;
+                _lastPullTime = Time.time;
             }
         }
 
-
-        moveInfo[2] = forceMovement;
-        movement["PullRopeMover"] = moveInfo;
+        _moveInfo[2] = forceMovement;
+        _movement["PullRopeMover"] = _moveInfo;
     }
-
-    private Vector3 GetForceMovement()
-    {
-        Vector3 direction = player.transform.position - otherPlayer.transform.position;
-        direction.Normalize();
-        forceMovement = direction * pullForce;
-        lastPullTime = Time.time;
-        return forceMovement;
-    }
-
 }

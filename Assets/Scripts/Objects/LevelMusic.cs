@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Sets the background music volume from player preferences on level start.
+/// </summary>
 public class LevelMusic : MonoBehaviour
 {
-    void Start()
+    private void Start()
     {
-        AudioSource audioSource = GetComponent<AudioSource>();
-        audioSource.volume = PlayerPrefs.GetFloat("Music Volume", 1);
+        GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("Music Volume", 1f);
     }
-
 }

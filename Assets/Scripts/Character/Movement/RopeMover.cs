@@ -1,81 +1,68 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Constrains player movement when the rope between players is taut.
+/// Projects movement away from the other player and pulls the player back within range.
+/// </summary>
 public class RopeMover : MonoBehaviour
 {
-    public bool show = false;
     public CharacterController otherPlayer;
     public int maxDist = 30;
 
-    private MovementManager manager;
-    private Vector3[] moveInfo = {new Vector3(), new Vector3(), new Vector3()};
-    private float dist, angle, dist_delta;
-    private Vector3 normalizedVector, projection;
+    private MovementManager _manager;
+    private Vector3[] _moveInfo = { new Vector3(), new Vector3(), new Vector3() };
+    private CharacterController _player;
+    private IDictionary<string, Vector3[]> _movement;
 
-    CharacterController player;
-    IDictionary<string, Vector3[]> movement;
-
-
-    void Start()
+    private void Start()
     {
-        manager = GetComponent<MovementManager>();
-        player = manager.player;
-        movement = manager.Vector3Stack;
-        movement.Add("RopeMover", moveInfo);
+        _manager = GetComponent<MovementManager>();
+        _player = _manager.player;
+        _movement = _manager.Vector3Stack;
+        _movement.Add("RopeMover", _moveInfo);
     }
 
-    public Vector3 dotFunc(Vector3 potentialMovement){
-        dist = Vector3.Distance(player.transform.position, otherPlayer.transform.position);
-        if (dist>maxDist){
-            // Angle from PLAYER to OTHER PLAYER
-            angle = Vector3.SignedAngle(
-                        new Vector3(1, 0, 0),
-                        otherPlayer.transform.position -  player.transform.position,
-                        new Vector3(0,0,1)
-                        );
-
-            normalizedVector = new Vector3(
-                        Mathf.Cos(angle * 2 * Mathf.PI / 360),
-                        Mathf.Sin(angle * 2 * Mathf.PI / 360), 0
-                        );
-            return normalizedVector*(dist-maxDist)*100;
-        }
-        else return Vector3.zero;
-        }
-
-
-    public Vector3 ropeFunction(Vector3 potentialMovement){
-        dist = Vector3.Distance(player.transform.position, otherPlayer.transform.position);
-        if (dist>maxDist){
-            // Angle from OTHER PLAYER to PLAYER
-            angle = Vector3.SignedAngle(
-                        new Vector3(1, 0, 0),
-                        player.transform.position - otherPlayer.transform.position,
-                        new Vector3(0,0,1));
-                    
-            normalizedVector = new Vector3(
-                        Mathf.Cos(angle * 2 * Mathf.PI / 360),
-                        Mathf.Sin(angle * 2 * Mathf.PI / 360), 0);
-            if (Vector3.Dot(potentialMovement,normalizedVector)>0) {
-                projection = Vector3.Project(potentialMovement,normalizedVector)/2;
-            }
-            else projection = new Vector3(0,0,0);
-        }
-        else projection = new Vector3(0,0,0);
-
-        return projection;
-        }
-
-    // void Update()
-    // {
-
-    // }
-    void OnGUI()
+    /// <summary>
+    /// Calculates a pull force toward the other player when the rope is taut.
+    /// </summary>
+    public Vector3 CalculateRopePull(Vector3 potentialMovement)
     {
-        if (show)
-        {
-            GUI.Label(new Rect(50, 80, 200, 100), "Angle = " + angle.ToString());
-        }
+        float dist = Vector3.Distance(_player.transform.position, otherPlayer.transform.position);
+        if (dist <= maxDist)
+            return Vector3.zero;
+
+        float angle = Vector3.SignedAngle(
+            Vector3.right,
+            otherPlayer.transform.position - _player.transform.position,
+            Vector3.forward);
+
+        float rad = angle * Mathf.Deg2Rad;
+        Vector3 direction = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0f);
+        return direction * (dist - maxDist) * 100f;
+    }
+
+    /// <summary>
+    /// Calculates the projection of movement along the rope direction to prevent
+    /// the player from moving further away when the rope is taut.
+    /// </summary>
+    public Vector3 CalculateRopeProjection(Vector3 potentialMovement)
+    {
+        float dist = Vector3.Distance(_player.transform.position, otherPlayer.transform.position);
+        if (dist <= maxDist)
+            return Vector3.zero;
+
+        float angle = Vector3.SignedAngle(
+            Vector3.right,
+            _player.transform.position - otherPlayer.transform.position,
+            Vector3.forward);
+
+        float rad = angle * Mathf.Deg2Rad;
+        Vector3 direction = new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0f);
+
+        if (Vector3.Dot(potentialMovement, direction) > 0f)
+            return Vector3.Project(potentialMovement, direction) / 2f;
+
+        return Vector3.zero;
     }
 }

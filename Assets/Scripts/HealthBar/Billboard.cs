@@ -1,18 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Keeps the health bar billboard always facing the main camera.
+/// </summary>
 public class Billboard : MonoBehaviour
 {
-    public Transform cam;
+    private Transform _cam;
 
-    private void Start() 
+    private void Start()
     {
-        cam  = Camera.main.transform;    
+        _cam = Camera.main.transform;
     }
 
-    private void LateUpdate() 
+    private void LateUpdate()
     {
-        transform.LookAt(transform.position + cam.forward);
+        transform.LookAt(transform.position + _cam.forward);
     }
 }

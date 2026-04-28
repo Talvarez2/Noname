@@ -1,7 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Per-player configuration data including player number, sprite renderer, and audio sources.
+/// Adjusts sound volumes when the player changes the game volume setting.
+/// </summary>
 public class PlayerData : MonoBehaviour
 {
     public int playerNum;
@@ -10,15 +12,21 @@ public class PlayerData : MonoBehaviour
     public AudioSource jumpSound;
     public AudioSource damageSound;
 
+    private float _lastGameVolume;
+
+    private void Start()
+    {
+        _lastGameVolume = PlayerPrefs.GetFloat("Game Volume", 1f);
+    }
+
     private void Update()
     {
-        float gamevol = PlayerPrefs.GetFloat("Game Volume", 1);
-        float gamevolold = PlayerPrefs.GetFloat("Game Volume old", 1);
-        if (gamevol != gamevolold)
+        float gameVolume = PlayerPrefs.GetFloat("Game Volume", 1f);
+        if (!Mathf.Approximately(gameVolume, _lastGameVolume))
         {
-            jumpSound.volume = gamevol;
-            damageSound.volume = gamevol;
-            PlayerPrefs.SetFloat("Game Volume old", gamevolold);
+            jumpSound.volume = gameVolume;
+            damageSound.volume = gameVolume;
+            _lastGameVolume = gameVolume;
         }
     }
 }

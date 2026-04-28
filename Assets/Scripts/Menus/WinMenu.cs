@@ -1,47 +1,49 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Level complete menu allowing the player to proceed to the next level or return to the main menu.
+/// </summary>
 public class WinMenu : MonoBehaviour
 {
     public GameObject winMenuUI;
     public GameObject winMenuCamera;
     public GameObject winMenuEventSystem;
     public Button winMenuNextLevelButton;
-    private GameObject levelExtras;
-    private string standardLevelSceneName = "Level-";
+
+    private GameObject _levelExtras;
+    private const string LevelScenePrefix = "Level-";
+
     private void SetActiveMenuItems(bool value)
     {
         winMenuUI.SetActive(value);
         winMenuCamera.SetActive(value);
         winMenuEventSystem.SetActive(value);
 
-        LevelSystem levelSystem = levelExtras.GetComponent<LevelSystem>();
+        LevelSystem levelSystem = _levelExtras.GetComponent<LevelSystem>();
         winMenuNextLevelButton.interactable = levelSystem.CheckNextLevel();
     }
 
+    /// <summary>
+    /// Shows the win menu and pauses the game.
+    /// </summary>
     public void Win()
     {
-        levelExtras = GameObject.FindWithTag("LevelExtras");
+        _levelExtras = GameObject.FindWithTag("LevelExtras");
         SetActiveMenuItems(true);
-        levelExtras.GetComponent<LevelTimeScale>().StopLevel();
+        _levelExtras.GetComponent<LevelTimeScale>().StopLevel();
     }
 
+    /// <summary>
+    /// Loads the next level scene and unloads the current one.
+    /// </summary>
     public void Next()
     {
-        LevelSystem levelSystem = levelExtras.GetComponent<LevelSystem>();
-        int nextLevel = levelSystem.GetActualLevel() + 1;
-
-        string levelSceneName = standardLevelSceneName.Insert(standardLevelSceneName.Length, nextLevel.ToString());
-        Debug.Log(levelSceneName);
-        SceneManager.LoadScene(levelSceneName, LoadSceneMode.Additive);
-        levelExtras.GetComponent<LevelTimeScale>().StartLevel();
+        int nextLevel = _levelExtras.GetComponent<LevelSystem>().GetActualLevel() + 1;
+        SceneManager.LoadScene(LevelScenePrefix + nextLevel, LoadSceneMode.Additive);
+        _levelExtras.GetComponent<LevelTimeScale>().StartLevel();
         SetActiveMenuItems(false);
-
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.UnloadSceneAsync(currentScene);
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
     }
-
 }

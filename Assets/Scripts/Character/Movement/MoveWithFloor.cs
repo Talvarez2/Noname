@@ -1,66 +1,60 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Moves the player along with moving platforms by tracking the ground object's
+/// position and rotation changes each frame.
+/// </summary>
 public class MoveWithFloor : MonoBehaviour
 {
-    CharacterController player;
+    private CharacterController _player;
+    private Vector3 _lastGroundPosition;
+    private string _lastGroundName;
+    private Quaternion _lastGroundRotation;
 
-    Vector3 groundPosition;
-    Vector3 lastGoundPosition;
-    string GroundName;
-    string LastGroundName;
-    Quaternion actualRot;
-    Quaternion lastRot;
-
-
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        player = this.GetComponent<CharacterController>();
+        _player = GetComponent<CharacterController>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (player.isGrounded)
+        if (_player.isGrounded)
         {
             RaycastHit hit;
-
-            if(Physics.SphereCast(transform.position, player.height /4.2f, -transform.up, out hit))
+            if (Physics.SphereCast(transform.position, _player.height / 4.2f, -transform.up, out hit))
             {
-                GameObject groundedIn = hit.collider.gameObject;
-                GroundName = groundedIn.name;
-                groundPosition = groundedIn.transform.position;
+                GameObject ground = hit.collider.gameObject;
+                string groundName = ground.name;
+                Vector3 groundPosition = ground.transform.position;
+                Quaternion groundRotation = ground.transform.rotation;
 
-                actualRot = groundedIn.transform.rotation;
-
-                if (groundPosition != lastGoundPosition && GroundName == LastGroundName){
-                    this.transform.position += groundPosition - lastGoundPosition;
+                if (groundPosition != _lastGroundPosition && groundName == _lastGroundName)
+                {
+                    transform.position += groundPosition - _lastGroundPosition;
                 }
 
-                if (actualRot != lastRot && GroundName == LastGroundName){
-                    var newRot = this.transform.rotation * (actualRot.eulerAngles - lastRot.eulerAngles);
-                    this.transform.RotateAround(groundedIn.transform.position, Vector3.up, newRot.y);
+                if (groundRotation != _lastGroundRotation && groundName == _lastGroundName)
+                {
+                    var rotationDelta = transform.rotation * (groundRotation.eulerAngles - _lastGroundRotation.eulerAngles);
+                    transform.RotateAround(ground.transform.position, Vector3.up, rotationDelta.y);
                 }
 
-                LastGroundName = GroundName;
-                lastGoundPosition = groundPosition;
-                lastRot = actualRot;
+                _lastGroundName = groundName;
+                _lastGroundPosition = groundPosition;
+                _lastGroundRotation = groundRotation;
             }
-
         }
-        else if (!player.isGrounded)
+        else
         {
-            LastGroundName = null;
-            lastGoundPosition = Vector3.zero;
-            lastRot = Quaternion.Euler(0, 0, 0);
+            _lastGroundName = null;
+            _lastGroundPosition = Vector3.zero;
+            _lastGroundRotation = Quaternion.identity;
         }
     }
 
-    private void OnDrawGizmos() {
-        player = this.GetComponent<CharacterController>();
+    private void OnDrawGizmos()
+    {
+        CharacterController player = GetComponent<CharacterController>();
         Gizmos.DrawWireSphere(transform.position, player.height / 4.2f);
     }
 }

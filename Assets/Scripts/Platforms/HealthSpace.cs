@@ -1,27 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Area that heals players while they remain inside the trigger zone.
+/// Uses negative damage via InflictDamage to restore health.
+/// </summary>
 public class HealthSpace : MonoBehaviour
 {
     public int health = 5;
-    BoxCollider m_Collider;
 
-    private void Start() 
+    private void OnTriggerEnter(Collider other)
     {
-        //Fetch the Collider from the GameObject
-        m_Collider = GetComponent<BoxCollider>();
-    }
-
-    private void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             other.GetComponent<HealthAndDamage>().InflictDamage(-health);
         }
     }
 
-    private void OnTriggerStay(Collider other) {
-        if (other.tag == "Player")
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
             other.GetComponent<HealthAndDamage>().InflictDamage(-health);
         }

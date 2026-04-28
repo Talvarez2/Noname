@@ -1,44 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Renders a visual rope line between two players using a LineRenderer.
+/// The rope color changes from green to red as the distance approaches the maximum.
+/// </summary>
 public class RopeRenderer : MonoBehaviour
 {
     public CharacterController player1;
     public CharacterController player2;
     public int maxDist = 20;
-    public Color color1 = new Color(0_5f, 0, 0, 1);
-    public Color color2 = new Color(0, 0_5f, 0, 1);
-    public Color color3 = new Color(0, 0_5f, 0, 1);
+    public Color colorNear = new Color(0.5f, 0f, 0f, 1f);
+    public Color colorFar = new Color(0f, 0.5f, 0f, 1f);
+    public Color colorTaut = new Color(0f, 0.5f, 0f, 1f);
 
+    private Vector3[] _characterPositions = { new Vector3(), new Vector3() };
+    private LineRenderer _ropeRenderer;
 
-
-    private Vector3[] characterPositions = {new Vector3(), new Vector3()};
-    private float distance;
-    private float alpha;
-    private LineRenderer ropeRenderer;
-    private Color fColor;
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        ropeRenderer = GetComponent<LineRenderer>();
+        _ropeRenderer = GetComponent<LineRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {   
-        characterPositions[0] = player1.transform.position;
-        characterPositions[1] = player2.transform.position;
-        ropeRenderer.SetPositions(characterPositions);
+    private void Update()
+    {
+        _characterPositions[0] = player1.transform.position;
+        _characterPositions[1] = player2.transform.position;
+        _ropeRenderer.SetPositions(_characterPositions);
 
-        distance = Vector3.Distance(player1.transform.position,player2.transform.position);
-        alpha = distance/maxDist;
-        if (maxDist-distance<0.1){
-            fColor = color3;
-        }
-        else{
-            fColor = color2*alpha + color1*(1-alpha);
-        }
-        ropeRenderer.material.color = fColor;
+        float distance = Vector3.Distance(player1.transform.position, player2.transform.position);
+        float alpha = distance / maxDist;
+
+        Color ropeColor = (maxDist - distance < 0.1f)
+            ? colorTaut
+            : Color.Lerp(colorNear, colorFar, alpha);
+
+        _ropeRenderer.material.color = ropeColor;
     }
 }

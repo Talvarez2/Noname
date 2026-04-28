@@ -1,27 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Plays a one-shot sound effect. Set playEnabled to true to trigger playback.
+/// </summary>
 public class SoundEffect : MonoBehaviour
 {
-    private AudioSource audioSource;
     public bool playEnabled;
 
-    void Start()
+    private AudioSource _audioSource;
+
+    private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
         playEnabled = false;
     }
 
-    void Update()
+    private void Update()
     {
-        audioSource.volume = PlayerPrefs.GetFloat("Game Volume", 1);
-        if (playEnabled == true && !audioSource.isPlaying)
-        {
-            audioSource.Play();
-        }
+        _audioSource.volume = PlayerPrefs.GetFloat("Game Volume", 1f);
 
-        if (playEnabled == true && audioSource.isPlaying)
+        if (playEnabled && !_audioSource.isPlaying)
+        {
+            _audioSource.Play();
+        }
+        else if (playEnabled && _audioSource.isPlaying)
         {
             playEnabled = false;
         }

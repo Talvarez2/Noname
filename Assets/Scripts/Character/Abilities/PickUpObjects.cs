@@ -1,43 +1,51 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Allows the player to pick up and drop objects using the Fire1 input button.
+/// </summary>
 public class PickUpObjects : MonoBehaviour
 {
-
-
     public GameObject ObjectToPickUp;
-    private GameObject PickedObject;
     public Transform InteractionZone;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (ObjectToPickUp != null
-            && ObjectToPickUp.GetComponent<PickableObject>().isPickable
-            && PickedObject == null)
-        {
-            if (Input.GetButtonDown("Fire1"))
-            {
-                PickedObject = ObjectToPickUp;
-                PickedObject.GetComponent<PickableObject>().isPickable = false;
-                PickedObject.transform.SetParent(InteractionZone);
-                PickedObject.transform.position = InteractionZone.position;
-                PickedObject.GetComponent<Rigidbody>().useGravity = false;
-                PickedObject.GetComponent<Rigidbody>().isKinematic = true;
-            }
-        }
+    private GameObject _pickedObject;
 
-        else if (PickedObject != null)
+    private void Update()
+    {
+        if (Input.GetButtonDown("Fire1"))
         {
-            if (Input.GetButtonDown("Fire1"))
+            if (_pickedObject != null)
             {
-                PickedObject.GetComponent<PickableObject>().isPickable = true;
-                PickedObject.transform.SetParent(null);
-                PickedObject.GetComponent<Rigidbody>().useGravity = true;
-                PickedObject.GetComponent<Rigidbody>().isKinematic = false;
-                PickedObject = null;
+                DropObject();
+            }
+            else if (ObjectToPickUp != null && ObjectToPickUp.GetComponent<PickableObject>().isPickable)
+            {
+                PickUp();
             }
         }
+    }
+
+    private void PickUp()
+    {
+        _pickedObject = ObjectToPickUp;
+        _pickedObject.GetComponent<PickableObject>().isPickable = false;
+        _pickedObject.transform.SetParent(InteractionZone);
+        _pickedObject.transform.position = InteractionZone.position;
+
+        Rigidbody rb = _pickedObject.GetComponent<Rigidbody>();
+        rb.useGravity = false;
+        rb.isKinematic = true;
+    }
+
+    private void DropObject()
+    {
+        _pickedObject.GetComponent<PickableObject>().isPickable = true;
+        _pickedObject.transform.SetParent(null);
+
+        Rigidbody rb = _pickedObject.GetComponent<Rigidbody>();
+        rb.useGravity = true;
+        rb.isKinematic = false;
+
+        _pickedObject = null;
     }
 }

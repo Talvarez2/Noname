@@ -1,32 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Handles player death by activating the "You Lost" overlay menu.
+/// </summary>
 public class HandleDeath : MonoBehaviour
 {
-    private GameObject lostMenu;
+    private GameObject _lostMenu;
 
-    void Start()
+    private void Start()
     {
-        LookForLostMenuGameObject();
+        FindLostMenuGameObject();
     }
 
-    private void LookForLostMenuGameObject()
+    private void FindLostMenuGameObject()
     {
-        Scene s = SceneManager.GetSceneByName("YouLost");
-        GameObject[] gameObjects = s.GetRootGameObjects();
-        foreach (var gameObject in gameObjects)
+        Scene scene = SceneManager.GetSceneByName("YouLost");
+        foreach (GameObject rootObject in scene.GetRootGameObjects())
         {
-            if (gameObject.name == "YouLostMenu")
+            if (rootObject.name == "YouLostMenu")
             {
-                lostMenu = gameObject;
+                _lostMenu = rootObject;
+                return;
             }
         }
     }
 
+    /// <summary>
+    /// Triggers the death sequence by showing the lost menu.
+    /// </summary>
     public void Die()
     {
-        lostMenu.GetComponent<LostMenu>().Lost();
+        _lostMenu.GetComponent<LostMenu>().Lost();
     }
 }

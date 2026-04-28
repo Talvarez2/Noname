@@ -1,47 +1,42 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Detects when both players are standing on the exit door and triggers the win menu.
+/// </summary>
 public class WinSystem : MonoBehaviour
 {
-    private bool[] playerOnExitDoor = { false, false };
-    private GameObject winMenu;
+    private bool[] _playerOnExitDoor = { false, false };
+    private GameObject _winMenu;
 
-    void Start()
+    private void Start()
     {
-        LookForWinMenuGameObject();
+        FindWinMenuGameObject();
     }
 
-    private void LookForWinMenuGameObject()
+    private void FindWinMenuGameObject()
     {
-        Scene s = SceneManager.GetSceneByName("YouWin");
-        GameObject[] gameObjects = s.GetRootGameObjects();
-        foreach (var gameObject in gameObjects)
+        Scene scene = SceneManager.GetSceneByName("YouWin");
+        foreach (GameObject rootObject in scene.GetRootGameObjects())
         {
-            if (gameObject.name == "YouWinMenu")
+            if (rootObject.name == "YouWinMenu")
             {
-                winMenu = gameObject;
+                _winMenu = rootObject;
+                return;
             }
         }
     }
 
+    /// <summary>
+    /// Toggles a player's presence on the exit door and checks if both players are there.
+    /// </summary>
     public void UpdatePlayerOnExitDoor(int playerNum)
     {
-        playerOnExitDoor[playerNum - 1] = !playerOnExitDoor[playerNum - 1];
+        _playerOnExitDoor[playerNum - 1] = !_playerOnExitDoor[playerNum - 1];
 
-        bool levelFinished = true;
-        foreach (var boolean in playerOnExitDoor)
+        if (_playerOnExitDoor[0] && _playerOnExitDoor[1])
         {
-            if (boolean == false)
-            {
-                levelFinished = false;
-            }
-        }
-
-        if (levelFinished == true)
-        {
-            winMenu.GetComponent<WinMenu>().Win();
+            _winMenu.GetComponent<WinMenu>().Win();
         }
     }
 }

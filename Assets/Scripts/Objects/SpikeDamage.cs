@@ -1,29 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Deals damage to players on contact with a spike hazard.
+/// Configures its own collider on start.
+/// </summary>
 public class SpikeDamage : MonoBehaviour
 {
     public int damage = 10;
-    BoxCollider m_Collider;
 
-    private void Start() 
+    private void Start()
     {
-        //Fetch the Collider from the GameObject
-        m_Collider = GetComponent<BoxCollider>();
-        m_Collider.size = new Vector3(1, 1, 1);
-        m_Collider.isTrigger = true;
+        BoxCollider collider = GetComponent<BoxCollider>();
+        collider.size = Vector3.one;
+        collider.isTrigger = true;
     }
 
-    private void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player")
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
             other.GetComponent<HealthAndDamage>().InflictDamage(damage);
         }
     }
 
-    private void OnTriggerStay(Collider other) {
-        if (other.tag == "Player")
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
             other.GetComponent<HealthAndDamage>().InflictDamage(damage);
         }

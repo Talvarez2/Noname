@@ -1,27 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Area that deals damage to players while they remain inside the trigger zone.
+/// </summary>
 public class DamageSpace : MonoBehaviour
 {
     public int damage = 10;
-    BoxCollider m_Collider;
 
-    private void Start() 
+    private void OnTriggerEnter(Collider other)
     {
-        //Fetch the Collider from the GameObject
-        m_Collider = GetComponent<BoxCollider>();
-    }
-
-    private void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             other.GetComponent<HealthAndDamage>().InflictDamage(damage);
         }
     }
 
-    private void OnTriggerStay(Collider other) {
-        if (other.tag == "Player")
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
             other.GetComponent<HealthAndDamage>().InflictDamage(damage);
         }
